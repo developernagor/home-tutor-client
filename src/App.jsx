@@ -9,6 +9,7 @@ import Contact from './pages/Contact/Contact'
 import Login from './pages/Login/Login'
 import SignUp from './pages/SignUp/SignUp'
 import Solution from './pages/Solution/Solution'
+import TutorProfile from './components/TutorProfile'
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/solution" element={<Solution></Solution>} />
+        <Route path="/tutor-details" element={<TutorProfile></TutorProfile>} />
       </Route>
     </Routes>
   )
