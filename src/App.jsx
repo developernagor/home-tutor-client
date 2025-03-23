@@ -10,7 +10,6 @@ import Login from './pages/Login/Login'
 import SignUp from './pages/SignUp/SignUp'
 import Solution from './pages/Solution/Solution'
 import TutorProfile from './components/TutorProfile'
-import Dash from './components/DashboardHome'
 import DashboardLayout from './layouts/DashboardLayout'
 import { useState } from 'react'
 import DashboardHome from './components/DashboardHome'
@@ -19,8 +18,15 @@ import AddTutor from './pages/Admin/AddTutor'
 import AllTutors from './pages/Admin/AllTutors'
 import AddNote from './pages/Admin/AddNote'
 import AllQuestions from './pages/Admin/AllQuestions'
+import AdminDashboardHome from './pages/Admin/AdminDashboardHome'
 
 function App() {
+
+  const user = {
+    name: "Mehedi",
+    email: "devmehedi@gmail.com",
+    role: "admin"
+  }
 
   const [isAuthenticated, setIsAuthenticated] = useState(true);
 
@@ -41,7 +47,19 @@ function App() {
 
       {/* Protected Dashboard Routes */}
       <Route path="/dashboard" element={isAuthenticated ? <DashboardLayout /> : <Navigate to="/login" />} >
-        <Route index element={<DashboardHome />} />
+        
+        {
+          user.role === "admin" ?
+          <>
+          <Route index element={<AdminDashboardHome></AdminDashboardHome>} />
+          </>
+          : 
+          <>
+          <Route index element={<DashboardHome />} />
+          </>
+        }
+        
+        
         <Route path='add-course' element={<AddCourse></AddCourse>} />
         <Route path='add-tutor' element={<AddTutor></AddTutor>} />
         <Route path='all-tutors' element={<AllTutors></AllTutors>} />
