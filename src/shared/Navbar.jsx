@@ -17,6 +17,7 @@ function Navbar() {
           <Link to="/ask-question" className="hover:text-gray-300">Ask a Question</Link>
           <Link to="/contact" className="hover:text-gray-300">Contact</Link>
           <Link to="/solution" className="hover:text-gray-300">Solution</Link>
+          <Link to="/dashboard" className="hover:text-gray-300">Dashboard</Link>
         </div>
 
         {/* Login/Signup */}

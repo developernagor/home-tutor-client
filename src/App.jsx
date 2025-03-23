@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router'
+import { Navigate, Route, Routes } from 'react-router'
 import './App.css'
 import MainLayout from './layouts/MainLayout'
 import Home from './pages/Home/Home'
@@ -10,8 +10,16 @@ import Login from './pages/Login/Login'
 import SignUp from './pages/SignUp/SignUp'
 import Solution from './pages/Solution/Solution'
 import TutorProfile from './components/TutorProfile'
+import Dash from './components/DashboardHome'
+import DashboardLayout from './layouts/DashboardLayout'
+import { useState } from 'react'
+import DashboardHome from './components/DashboardHome'
 
 function App() {
+
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
+
+
   return (
     <Routes>
       <Route path='/' element={<MainLayout />}>
@@ -25,7 +33,16 @@ function App() {
         <Route path="/solution" element={<Solution></Solution>} />
         <Route path="/tutor/:id" element={<TutorProfile></TutorProfile>} />
       </Route>
+
+      {/* Protected Dashboard Routes */}
+      <Route path="/dashboard" element={isAuthenticated ? <DashboardLayout /> : <Navigate to="/login" />} >
+        <Route path="home" element={<DashboardHome />} />
+        {/* <Route path="analytics" element={<Analytics />} />
+        <Route path="settings" element={<Settings />} /> */}
+      </Route>
     </Routes>
+
+    
   )
 }
 
