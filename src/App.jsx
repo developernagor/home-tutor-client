@@ -14,6 +14,11 @@ import Dash from './components/DashboardHome'
 import DashboardLayout from './layouts/DashboardLayout'
 import { useState } from 'react'
 import DashboardHome from './components/DashboardHome'
+import AddCourse from './pages/Admin/AddCourse'
+import AddTutor from './pages/Admin/AddTutor'
+import AllTutors from './pages/Admin/AllTutors'
+import AddNote from './pages/Admin/AddNote'
+import AllQuestions from './pages/Admin/AllQuestions'
 
 function App() {
 
@@ -37,6 +42,12 @@ function App() {
       {/* Protected Dashboard Routes */}
       <Route path="/dashboard" element={isAuthenticated ? <DashboardLayout /> : <Navigate to="/login" />} >
         <Route index element={<DashboardHome />} />
+        <Route path='add-course' element={<AddCourse></AddCourse>} />
+        <Route path='add-tutor' element={<AddTutor></AddTutor>} />
+        <Route path='all-tutors' element={<AllTutors></AllTutors>} />
+        <Route path='add-note' element={<AddNote></AddNote>} />
+        <Route path='all-questions' element={<AllQuestions></AllQuestions>} />
+        
         {/* <Route path="analytics" element={<Analytics />} />
         <Route path="settings" element={<Settings />} /> */}
       </Route>

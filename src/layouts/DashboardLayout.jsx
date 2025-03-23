@@ -9,6 +9,11 @@ function DashboardLayout() {
         <ul className="mt-4 space-y-2">
           {/* Navigate to MainLayout (Home Page) */}
           <li><Link to="/" className="text-white">Home</Link></li>
+          <li><Link to="add-course" className="text-white">Add Course</Link></li>
+          <li><Link to="add-tutor" className="text-white">Add Tutor</Link></li>
+          <li><Link to="all-tutors" className="text-white">All Tutors</Link></li>
+          <li><Link to="all-questions" className="text-white">All Questions</Link></li>
+          <li><Link to="add-note" className="text-white">Add Note</Link></li>
           {/* <li><Link to="/dashboard/analytics" className="text-white">Analytics</Link></li> */}
           {/* <li><Link to="/dashboard/settings" className="text-white">Settings</Link></li> */}
         </ul>
