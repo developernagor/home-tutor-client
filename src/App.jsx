@@ -36,7 +36,7 @@ function App() {
 
       {/* Protected Dashboard Routes */}
       <Route path="/dashboard" element={isAuthenticated ? <DashboardLayout /> : <Navigate to="/login" />} >
-        <Route path="home" element={<DashboardHome />} />
+        <Route index element={<DashboardHome />} />
         {/* <Route path="analytics" element={<Analytics />} />
         <Route path="settings" element={<Settings />} /> */}
       </Route>
