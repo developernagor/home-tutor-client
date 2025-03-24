@@ -19,6 +19,7 @@ import AllTutors from './pages/Admin/AllTutors'
 import AddNote from './pages/Admin/AddNote'
 import AllQuestions from './pages/Admin/AllQuestions'
 import AdminDashboardHome from './pages/Admin/AdminDashboardHome'
+import SingleQuestionSolution from './components/SolutionPage/SingleQuestionSolution'
 
 function App() {
 
@@ -42,6 +43,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/solution" element={<Solution></Solution>} />
+        <Route path="/solution/:id" element={<SingleQuestionSolution></SingleQuestionSolution>} />
         <Route path="/tutor/:id" element={<TutorProfile></TutorProfile>} />
       </Route>
 

@@ -16,6 +16,7 @@ function AddNote() {
 
   const [noteData, setNoteData] = useState({
     noteTitle: "",
+    questionId: "",
     noteDescription: "",
     noteSubject: "",
     noteClass: "",
@@ -51,6 +52,7 @@ function AddNote() {
   const validateForm = () => {
     const newErrors = {};
     if (!noteData.noteTitle) newErrors.noteTitle = "Title is required";
+    if (!noteData.questionId) newErrors.questionId = "Question Id is required";
     if (!noteData.noteDescription) newErrors.noteDescription = "Description is required";
     if (!noteData.noteSubject || noteData.noteSubject === "Select a subject")
       newErrors.noteSubject = "Subject is required";
@@ -113,6 +115,7 @@ setSuccessMessage("Note added successfully!");
       // Reset form only after successful submission
       setNoteData({
         noteTitle: "",
+        questionId: "",
         noteDescription: "",
         noteSubject: "",
         noteClass: "",
@@ -142,6 +145,18 @@ setSuccessMessage("Note added successfully!");
             className="w-full p-2 border border-gray-300 rounded"
           />
           {errors.noteTitle && <p className="text-red-500 text-sm">{errors.noteTitle}</p>}
+        </div>
+
+        <div className="mb-4">
+          <label className="block text-gray-700">Question Id</label>
+          <input
+            type="text"
+            name="questionId"
+            value={noteData.questionId}
+            onChange={handleInputChange}
+            className="w-full p-2 border border-gray-300 rounded"
+          />
+          {errors.questionId && <p className="text-red-500 text-sm">{errors.questionId}</p>}
         </div>
 
         {/* Note Description */}
