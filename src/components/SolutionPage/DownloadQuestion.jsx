@@ -3,10 +3,10 @@ import { useState } from "react";
 
 const sampleData = [
   { id: 1, class: "One", chapter:"2.1", subject: "Mathematics", question: "Do you have your Resume ?", file: "https://drive.google.com/file/d/1lORi14saDUPN1QV3xSlT79axRavNcKws/view?usp=sharing" },
-  { id: 2, class: "One", chapter:"2.1", subject: "Science", question: "What is Newton’s first law?", file: "/files/newton-law.pdf" },
-  { id: 3, class: "One", chapter:"2.1", subject: "English", question: "What is a metaphor?", file: "/files/metaphor.docx" },
-  { id: 4, class: "One", chapter:"2.1", subject: "History", question: "Who was Napoleon Bonaparte?", file: "/files/napoleon.docx" },
-  { id: 5, class: "One", chapter:"2.1", subject: "Computer Science", question: "What is an algorithm?", file: "/files/algorithm.pdf" },
+  { id: 2, class: "Two", chapter:"2", subject: "Science", question: "What is Newton’s first law?", file: "/files/newton-law.pdf" },
+  { id: 3, class: "Three", chapter:"1", subject: "English", question: "What is a metaphor?", file: "/files/metaphor.docx" },
+  { id: 4, class: "Four", chapter:"4", subject: "History", question: "Who was Napoleon Bonaparte?", file: "/files/napoleon.docx" },
+  { id: 5, class: "Five", chapter:"8", subject: "Computer Science", question: "What is an algorithm?", file: "/files/algorithm.pdf" },
 ];
 
 const DownloadQuestion = () => {
@@ -31,10 +31,11 @@ const uniqueChapters = ["All", ...new Set(sampleData.map((item) => item.chapter)
   return (
     <div className="max-w-4xl mx-auto p-6 bg-gray-100 rounded-lg shadow-md">
       {/* Title */}
-      <h2 className="text-2xl font-bold text-blue-600">Subject-wise Questions & Answers</h2>
+      <h2 className="text-2xl font-bold text-blue-600">Class, subject & chapter-wise Questions & Answers</h2>
 
       {/* Subject Filter */}
       <div className="filterQuestion flex justify-between">
+
       <div className="mt-4 flex items-center gap-2">
         {/* <Filter className="w-5 h-5 text-gray-600" /> */}
         <select
@@ -49,6 +50,7 @@ const uniqueChapters = ["All", ...new Set(sampleData.map((item) => item.chapter)
           }
         </select>
       </div>
+      
 
       <div className="mt-4 flex items-center gap-2">
         {/* <Filter className="w-5 h-5 text-gray-600" /> */}
@@ -91,7 +93,7 @@ const uniqueChapters = ["All", ...new Set(sampleData.map((item) => item.chapter)
               <th className="border border-gray-300 p-3">#</th>
               <th className="border border-gray-300 p-3">Subject</th>
               <th className="border border-gray-300 p-3">Question</th>
-              <th className="border border-gray-300 p-3">Actions</th>
+              <th className="border border-gray-300 p-3">Answers</th>
             </tr>
           </thead>
           <tbody>
@@ -116,7 +118,7 @@ const uniqueChapters = ["All", ...new Set(sampleData.map((item) => item.chapter)
             ) : (
               <tr>
                 <td colSpan={4} className="border border-gray-300 p-3 text-center text-gray-500">
-                  No questions available for this subject.
+                  No questions available for this subject or chapter.
                 </td>
               </tr>
             )}
