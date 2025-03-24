@@ -5,9 +5,6 @@ import { Link } from 'react-router'
 
 function AllQuestions() {
 
-  // const {id} = useParams();
-
-
   const {data: questions = [], isLoading, isError, error} = useQuery({
     queryKey: ["questions"],
     queryFn: async() => {

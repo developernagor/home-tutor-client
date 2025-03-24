@@ -5,14 +5,15 @@ function AddNote() {
   const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
 
-  const subjectList = [
+  const [subjectList, setSubjectList] = useState([
     "Bangla",
     "English",
     "Ict",
     "Science",
     "Mathematics",
     "Islamic Studies",
-  ];
+  ]);
+  const [newSubject, setNewSubject] = useState(""); // State for new subject
 
   const [noteData, setNoteData] = useState({
     noteTitle: "",
@@ -24,8 +25,6 @@ function AddNote() {
     noteSolution: "",
     solutionFile: null,
   });
-
-  const uniqueSubjects = ["Select a subject", ...subjectList];
 
   const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
   const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
@@ -48,34 +47,27 @@ function AddNote() {
     }));
   };
 
-  // Simple validation function
-  const validateForm = () => {
-    const newErrors = {};
-    if (!noteData.noteTitle) newErrors.noteTitle = "Title is required";
-    if (!noteData.questionId) newErrors.questionId = "Question Id is required";
-    if (!noteData.noteDescription) newErrors.noteDescription = "Description is required";
-    if (!noteData.noteSubject || noteData.noteSubject === "Select a subject")
-      newErrors.noteSubject = "Subject is required";
-    if (!noteData.noteClass) newErrors.noteClass = "Class is required";
-    if (!noteData.noteChapter) newErrors.noteChapter = "Chapter is required";
-    if (!noteData.noteSolution) newErrors.noteSolution = "Solution is required";
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+  // Handle new subject input change
+  const handleNewSubjectChange = (e) => {
+    setNewSubject(e.target.value);
+  };
+
+  // Add new subject to the subject list
+  const addNewSubject = () => {
+    if (newSubject.trim() && !subjectList.includes(newSubject.trim())) {
+      setSubjectList((prevSubjects) => [...prevSubjects, newSubject.trim()]);
+      setNewSubject(""); // Clear the input after adding
+    }
   };
 
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (!validateForm()) return;
-
     let uploadedImageUrl = null;
 
-    // If a file is selected, upload it to ImgBB first
     if (noteData.solutionFile) {
       const formData = new FormData();
       formData.append("image", noteData.solutionFile);
-
 
       try {
         setLoading(true);
@@ -83,20 +75,20 @@ function AddNote() {
         uploadedImageUrl = res.data.data.display_url;
         setLoading(false);
       } catch (error) {
-        console.log(error)
+        console.log(error);
         setErrors((prevErrors) => ({
           ...prevErrors,
           solutionFile: "Image upload failed. Please try again.",
         }));
         return;
+      }
     }
-  }
 
     // Prepare final note data for submission
     const finalNoteData = {
       ...noteData,
       solutionTime: new Date(),
-      solutionFile: uploadedImageUrl, // Store uploaded image URL or null
+      solutionFile: uploadedImageUrl,
     };
 
     // Send data to backend
@@ -106,13 +98,9 @@ function AddNote() {
         finalNoteData
       );
       console.log("Note Added:", response.data);
+      setSuccessMessage("Note added successfully!");
 
-      // After successful submission
-setSuccessMessage("Note added successfully!");
-
-
-
-      // Reset form only after successful submission
+      // Reset form after successful submission
       setNoteData({
         noteTitle: "",
         questionId: "",
@@ -124,6 +112,7 @@ setSuccessMessage("Note added successfully!");
         solutionFile: null,
       });
 
+      console.log(errors)
       setErrors({});
     } catch (error) {
       console.log("Error adding note:", error.message);
@@ -144,9 +133,9 @@ setSuccessMessage("Note added successfully!");
             onChange={handleInputChange}
             className="w-full p-2 border border-gray-300 rounded"
           />
-          {errors.noteTitle && <p className="text-red-500 text-sm">{errors.noteTitle}</p>}
         </div>
 
+        {/* Question ID */}
         <div className="mb-4">
           <label className="block text-gray-700">Question Id</label>
           <input
@@ -156,7 +145,6 @@ setSuccessMessage("Note added successfully!");
             onChange={handleInputChange}
             className="w-full p-2 border border-gray-300 rounded"
           />
-          {errors.questionId && <p className="text-red-500 text-sm">{errors.questionId}</p>}
         </div>
 
         {/* Note Description */}
@@ -169,7 +157,6 @@ setSuccessMessage("Note added successfully!");
             className="w-full p-2 border border-gray-300 rounded"
             rows="4"
           ></textarea>
-          {errors.noteDescription && <p className="text-red-500 text-sm">{errors.noteDescription}</p>}
         </div>
 
         {/* Subject Dropdown */}
@@ -181,13 +168,31 @@ setSuccessMessage("Note added successfully!");
             onChange={handleInputChange}
             className="w-full p-2 border border-gray-300 rounded"
           >
-            {uniqueSubjects.map((sub) => (
-              <option key={sub} value={sub}>
+            <option value="">Select a subject</option>
+            {subjectList.map((sub, index) => (
+              <option key={index} value={sub}>
                 {sub}
               </option>
             ))}
           </select>
-          {errors.noteSubject && <p className="text-red-500 text-sm">{errors.noteSubject}</p>}
+        </div>
+
+        {/* Add New Subject */}
+        <div className="mb-4 flex gap-2">
+          <input
+            type="text"
+            placeholder="Enter new subject"
+            value={newSubject}
+            onChange={handleNewSubjectChange}
+            className="w-full p-2 border border-gray-300 rounded"
+          />
+          <button
+            type="button"
+            onClick={addNewSubject}
+            className="bg-green-500 text-white px-4 py-2 rounded"
+          >
+            Add Subject
+          </button>
         </div>
 
         {/* Class */}
@@ -200,7 +205,6 @@ setSuccessMessage("Note added successfully!");
             onChange={handleInputChange}
             className="w-full p-2 border border-gray-300 rounded"
           />
-          {errors.noteClass && <p className="text-red-500 text-sm">{errors.noteClass}</p>}
         </div>
 
         {/* Chapter */}
@@ -213,7 +217,6 @@ setSuccessMessage("Note added successfully!");
             onChange={handleInputChange}
             className="w-full p-2 border border-gray-300 rounded"
           />
-          {errors.noteChapter && <p className="text-red-500 text-sm">{errors.noteChapter}</p>}
         </div>
 
         {/* Solution */}
@@ -226,22 +229,30 @@ setSuccessMessage("Note added successfully!");
             className="w-full p-2 border border-gray-300 rounded"
             rows="6"
           ></textarea>
-          {errors.noteSolution && <p className="text-red-500 text-sm">{errors.noteSolution}</p>}
         </div>
 
-        {/* Solution File Upload */}
+        {/* Upload Solution File */}
         <div className="mb-4">
           <label className="block text-gray-700">Upload Solution File</label>
-          <input type="file" accept="image/*,.pdf,.doc,.docx" onChange={handleImageChange} className="w-full p-2 border border-gray-300 rounded" />
+          <input
+            type="file"
+            accept="image/*,.pdf,.doc,.docx"
+            onChange={handleImageChange}
+            className="w-full p-2 border border-gray-300 rounded"
+          />
         </div>
 
         {/* Submit Button */}
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded" disabled={loading}>
-  {loading ? "Adding..." : "Add Note"}
-</button>
+        <button
+          type="submit"
+          className="bg-blue-500 text-white px-4 py-2 rounded"
+          disabled={loading}
+        >
+          {loading ? "Adding..." : "Add Note"}
+        </button>
       </form>
-      {successMessage && <p className="text-green-500">{successMessage}</p>}
 
+      {successMessage && <p className="text-green-500 mt-4">{successMessage}</p>}
     </div>
   );
 }
