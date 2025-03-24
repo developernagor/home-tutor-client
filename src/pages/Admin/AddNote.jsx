@@ -84,6 +84,7 @@ function AddNote() {
     try {
       const response = await axios.post(`${import.meta.env.VITE_API_URL}/note`, finalNoteData);
       // console.log("Note Added:", response.data);
+      return response.data;
     } catch (error) {
       console.log("Error adding note:", error.message);
     }
