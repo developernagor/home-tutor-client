@@ -1,4 +1,6 @@
+import axios from 'axios';
 import React, { useState } from 'react';
+import Swal from 'sweetalert2';
 
 function AddCourse() {
   const [courseData, setCourseData] = useState({
@@ -43,11 +45,31 @@ function AddCourse() {
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     if (validateForm()) {
       // Process the form data
       console.log('Course Added:', courseData);
+
+      try{
+        const response = await axios.post(`${import.meta.env.VITE_API_URL}/course`, courseData)
+  
+        console.log (response.data)
+  
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Your course has been submitted successfully !",
+          showConfirmButton: false,
+          timer: 1500
+        });  
+        
+      }catch(error){
+        console.log(error.message)
+      }
+
+
+
       // Reset form after successful submission
       setCourseData({
         courseSubject: '',
