@@ -136,7 +136,7 @@ function AddNote() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-white shadow-md rounded">
+    <div className="mx-auto p-6 bg-white shadow-md rounded">
       <h1 className="text-2xl font-bold mb-4">Add Note / Solution</h1>
       <form onSubmit={handleSubmit}>
         {/* Note Title */}

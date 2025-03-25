@@ -27,7 +27,11 @@ function FeaturedTutors() {
   return (
     <section className="py-16 px-4">
   <h2 className="text-3xl font-bold text-center mb-8">Top Rated Tutors</h2>
-  <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+  {
+    tutors?.length !== 0 
+    ? 
+    <>
+    <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
     {tutors.map((tutor, index) => (
       <div key={index} className="bg-white shadow-lg p-6 rounded-lg text-center">
         <img src={tutor.tutorImage} alt="Tutor" className="w-24 h-24 mx-auto rounded-full"/>
@@ -42,6 +46,15 @@ function FeaturedTutors() {
       </div>
     ))}
   </div>
+    </>
+    : 
+    <>
+    <div>
+      <p className='text-2xl text-center'>Tutors are not available.</p>
+    </div>
+    </>
+  }
+  
 </section>
 
   )

@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router';
+import Swal from 'sweetalert2';
 
 function AddTutor() {
   const [tutorData, setTutorData] = useState({
@@ -11,6 +13,8 @@ function AddTutor() {
     tutorLocation: '',
     tutorAvailability: '',
   });
+
+  const navigate = useNavigate();
 
   const [errors, setErrors] = useState({});
 
@@ -44,6 +48,14 @@ function AddTutor() {
     if (validateForm()) {
       // Process the tutor data
       console.log('Tutor Added:', tutorData);
+
+      Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Tutor added successfully !",
+                showConfirmButton: false,
+                timer: 1500
+              });  
       // Reset form after successful submission
       setTutorData({
         tutorName: '',
@@ -55,11 +67,13 @@ function AddTutor() {
         tutorLocation: '',
         tutorAvailability: '',
       });
+
+      navigate("/dashboard/all-tutors")
     }
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-white shadow-md rounded">
+    <div className="p-6 bg-white shadow-md rounded">
       <h1 className="text-2xl font-bold mb-4">Add New Tutor</h1>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">

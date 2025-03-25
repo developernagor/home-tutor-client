@@ -87,7 +87,7 @@ function AddCourse() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-white shadow-md rounded">
+    <div className="p-6 bg-white shadow-md rounded">
       <h1 className="text-2xl font-bold mb-4">Add New Course</h1>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">

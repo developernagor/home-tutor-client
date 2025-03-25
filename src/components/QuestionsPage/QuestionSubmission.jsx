@@ -1,9 +1,45 @@
 import axios from 'axios';
-import React from 'react'
+import React, { useState } from 'react'
 import Swal from 'sweetalert2';
 import {v4 as uuidv4} from 'uuid';
 
 function QuestionSubmission() {
+
+    const [newSubject, setNewSubject] = useState(""); // State for new subject
+
+    const [subjectList, setSubjectList] = useState([
+      "Mathematics",
+      "Science",
+      "Bangla",
+      "English",
+      "Chemistry",
+      "Physics",
+      "Biology",
+      "Higher Mathematics",
+      "Islamic Studies",
+      "Economics",
+      "Agriculture",
+    ]);
+    
+
+     // Handle new subject input change
+  const handleNewSubjectChange = (e) => {
+    setNewSubject(e.target.value);
+  };
+
+    // Add new subject to the subject list
+    const addNewSubject = () => {
+      const trimmedSubject = newSubject.trim();
+    const subjectLowerCase = trimmedSubject.toLowerCase();
+
+    if (trimmedSubject && !subjectList.some(sub => sub.toLowerCase() === subjectLowerCase)) {
+      setSubjectList((prevSubjects) => [...prevSubjects, trimmedSubject]);
+      setNewSubject(""); // Clear input after adding
+    }
+    };
+
+
+  
 
   const handleQuestionSubmission = async(event) => {
     event.preventDefault();
@@ -69,20 +105,31 @@ function QuestionSubmission() {
         <option value="Other">Other</option>
       </select>
       <select name='category' className="w-full p-3 border rounded-lg mb-4">
-        <option>Select Subject</option>
-        <option value="Mathematics">Mathematics</option>
-        <option value="science">Science</option>
-        <option value="Bangla">Bangla</option>
-        <option value="English">English</option>
-        <option value="Chemistry">Chemistry</option>
-        <option value="Physics">Physics</option>
-        <option value="Biology">Biology</option>
-        <option value="Higher Mathematics">Higher Mathematics</option>
-        <option value="Islamic Studies">Islamic Studies</option>
-        <option value="Economics">Economics</option>
-        <option value="Agriculture">Agriculture</option>
-        <option value="Other">Other</option>
-      </select>
+  <option>Select Subject</option>
+  {subjectList.map((subject, index) => (
+    <option key={index} value={subject}>{subject}</option>
+  ))}
+</select>
+
+      {/* Add New Subject */}
+      <div className="mb-4 flex gap-2">
+          <input
+            type="text"
+            placeholder="Enter new subject"
+            value={newSubject}
+            onChange={handleNewSubjectChange}
+            className="w-full p-2 border border-gray-300 rounded"
+          />
+          <button
+            type="button"
+            onClick={addNewSubject}
+            className="bg-green-500 text-white px-4 py-2 rounded"
+          >
+            Add Subject
+          </button>
+        </div>
+
+
       <input type="number,text" name="chapter" placeholder="Enter chapter or topic" className="w-full p-3 border rounded-lg mb-4"/>
       <textarea name='questionDetails' placeholder="Provide more details (optional)" className="w-full p-3 border rounded-lg mb-4"></textarea>
       <button className="w-full bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700">

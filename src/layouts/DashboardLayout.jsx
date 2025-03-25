@@ -11,9 +11,9 @@ function DashboardLayout() {
   return (
     <div className="flex h-screen">
       {/* Sidebar */}
-      <aside className="bg-gray-900 text-white w-64 p-4">
-        <h2 className="text-xl font-bold">Dashboard</h2>
-        <ul className="mt-4 space-y-2">
+      <aside className="bg-gray-900 text-white w-4/12 md:w-2/12 p-4">
+        <h2 className="text-sm md:text-3xl font-bold">Dashboard</h2>
+        <ul className="mt-2 md:mt-4 text-sm md:text-2xl space-y-1 md:space-y-2">
           
           {
             user.role === "admin" 
@@ -36,7 +36,7 @@ function DashboardLayout() {
       </aside>
 
       {/* Main Content */}
-      <div className="flex-1 p-6">
+      <div className="flex-1 p-2 md:p-4 lg:p-6 w-8/12 md:w-10/12">
         <Outlet /> {/* This will render the dashboard pages */}
       </div>
     </div>
