@@ -16,11 +16,12 @@ import DashboardHome from './components/DashboardHome';
 import AddCourse from './pages/Admin/AddCourse';
 import AddTutor from './pages/Admin/AddTutor';
 import AllTutors from './pages/Admin/AllTutors';
-import AddNote from './pages/Admin/AddNote';
+
 import AllQuestions from './pages/Admin/AllQuestions';
 import AdminDashboardHome from './pages/Admin/AdminDashboardHome';
 import SingleQuestionSolution from './components/SolutionPage/SingleQuestionSolution';
 import CourseDetails from './components/CoursesPage/CourseDetails';
+import AddNote from './pages/Admin/AddNote';
 
 function App() {
 

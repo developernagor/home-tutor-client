@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import React from "react";
-import { useParams } from "react-router";
+import { Link, useParams } from "react-router";
 
 function SingleQuestionSolution() {
   const { id } = useParams();
-//   console.log(id);
+    console.log(id);
 
   const {
     data: solution,
@@ -15,15 +15,12 @@ function SingleQuestionSolution() {
   } = useQuery({
     queryKey: ["solution", id],
     queryFn: async () => {
-      try{
         const response = await axios.get(
-            `${import.meta.env.VITE_API_URL}/solution/${id}`
-          );
-          console.log(solution);
-          return response.data;
-      }catch(error){
-        console.log(error.message)
-      }
+          `${import.meta.env.VITE_API_URL}/solution/${id}`
+        );
+        console.log(solution);
+        return response.data;
+      
     },
   });
 
@@ -33,9 +30,16 @@ function SingleQuestionSolution() {
 
   if (!solution || solution.length === 0 || !solution.questionId) {
     return (
-      <p className="text-center text-gray-500">
-        No solution found for this question.
-      </p>
+      <div className="flex flex-col justify-center items-center">
+        <p className="text-center text-4xl my-4 text-gray-500">
+          No solution found for this question.
+        </p>
+        <Link to={`/solution/${id}`}>
+          <button className="btn bg-blue-600 text-white rounded-lg">
+            Add Your Answer
+          </button>
+        </Link>
+      </div>
     );
   }
 
@@ -51,11 +55,19 @@ function SingleQuestionSolution() {
         {solution.noteTitle}
       </h2>
       <div className="mb-4">
-        <p className="text-md text-gray-600"><strong>Class:</strong> {solution.noteClass}</p>
-        <p className="text-md text-gray-600"><strong>Subject:</strong> {solution.noteSubject}</p>
-        <p className="text-md text-gray-600"><strong>Chapter:</strong> {solution.noteChapter}</p>
+        <p className="text-md text-gray-600">
+          <strong>Class:</strong> {solution.noteClass}
+        </p>
+        <p className="text-md text-gray-600">
+          <strong>Subject:</strong> {solution.noteSubject}
+        </p>
+        <p className="text-md text-gray-600">
+          <strong>Chapter:</strong> {solution.noteChapter}
+        </p>
       </div>
-      <p className="text-lg text-gray-800 leading-relaxed">{solution.noteSolution}</p>
+      <p className="text-lg text-gray-800 leading-relaxed">
+        {solution.noteSolution}
+      </p>
       {solution.solutionFile && (
         <div className="mt-6 flex justify-center">
           <img

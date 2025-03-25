@@ -1,9 +1,25 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { useLocation } from "react-router";
 
 function AddNote() {
   const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
+
+  const location = useLocation();
+  const questionData = location.state?.question || {};
+  // console.log("Received question data", questionData)
+  // console.log(questionData)
+
+  const {
+    questionChapter,
+    questionClass,
+    // questionDetails,
+    questionId,
+    questionSubject,
+    questionTitle,
+    _id
+  } = questionData;
 
   const [subjectList, setSubjectList] = useState([
     "Bangla",
@@ -16,12 +32,12 @@ function AddNote() {
   const [newSubject, setNewSubject] = useState(""); // State for new subject
 
   const [noteData, setNoteData] = useState({
-    noteTitle: "",
-    questionId: "",
+    noteTitle: questionTitle || "",
+    questionId: questionId || "",
     noteDescription: "",
-    noteSubject: "",
-    noteClass: "",
-    noteChapter: "",
+    noteSubject: questionSubject || "",
+    noteClass: questionClass || "",
+    noteChapter: questionChapter || "",
     noteSolution: "",
     solutionFile: null,
   });
@@ -129,7 +145,8 @@ function AddNote() {
           <input
             type="text"
             name="noteTitle"
-            value={noteData.noteTitle}
+            value={questionTitle}
+            readOnly
             onChange={handleInputChange}
             className="w-full p-2 border border-gray-300 rounded"
           />
@@ -141,7 +158,8 @@ function AddNote() {
           <input
             type="text"
             name="questionId"
-            value={noteData.questionId}
+            value={questionId}
+            readOnly
             onChange={handleInputChange}
             className="w-full p-2 border border-gray-300 rounded"
           />
@@ -164,7 +182,8 @@ function AddNote() {
           <label className="block text-gray-700">Subject</label>
           <select
             name="noteSubject"
-            value={noteData.noteSubject}
+            value={questionSubject}
+            readOnly
             onChange={handleInputChange}
             className="w-full p-2 border border-gray-300 rounded"
           >
@@ -201,7 +220,8 @@ function AddNote() {
           <input
             type="text"
             name="noteClass"
-            value={noteData.noteClass}
+            value={questionClass}
+            readOnly
             onChange={handleInputChange}
             className="w-full p-2 border border-gray-300 rounded"
           />
@@ -213,7 +233,7 @@ function AddNote() {
           <input
             type="text"
             name="noteChapter"
-            value={noteData.noteChapter}
+            value={ questionChapter || noteData.noteChapter }
             onChange={handleInputChange}
             className="w-full p-2 border border-gray-300 rounded"
           />

@@ -28,7 +28,7 @@ function RecentlyAskedQuestions() {
       <h2 className="text-3xl font-bold text-center mb-8">Recent Questions</h2>
       <div className="max-w-5xl mx-auto space-y-4">
         {questions.length > 0 ? (
-          questions.slice(0,6).map((item, index) => (
+          questions.map((item, index) => (
             <div key={index} className="bg-white p-4 rounded-lg shadow-md">
               <p className="text-lg font-semibold">{item.questionTitle}</p>
               <p className="text-sm text-gray-500">Asked by {item.user || "Anonymous"}</p>
