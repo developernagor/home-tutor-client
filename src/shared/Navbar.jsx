@@ -7,8 +7,8 @@ function Navbar() {
           <Link to="/find-tutors" className="hover:text-gray-300">Find Tutors</Link>
           <Link to="/courses" className="hover:text-gray-300">Courses</Link>
           <Link to="/ask-question" className="hover:text-gray-300">Ask a Question</Link>
-          <Link to="/contact" className="hover:text-gray-300">Contact</Link>
           <Link to="/solution" className="hover:text-gray-300">Solution</Link>
+          <Link to="/contact" className="hover:text-gray-300">Contact</Link>
           <Link to="/dashboard" className="hover:text-gray-300">Dashboard</Link>
 
           
@@ -21,8 +21,8 @@ function Navbar() {
           <Link to="/find-tutors" className="mb-2 hover:text-white">Find Tutors</Link>
           <Link to="/courses" className="mb-2 hover:text-white">Courses</Link>
           <Link to="/ask-question" className="mb-2 hover:text-white">Ask a Question</Link>
-          <Link to="/contact" className="mb-2 hover:text-white">Contact</Link>
           <Link to="/solution" className="mb-2 hover:text-white">Solution</Link>
+          <Link to="/contact" className="mb-2 hover:text-white">Contact</Link>
           <Link to="/dashboard" className="mb-2 hover:text-white">Dashboard</Link>
 
           <Link to="/login" className="mb-2 bg-white text-blue-600 px-4 py-2 rounded-lg hover:bg-gray-200">

@@ -22,6 +22,8 @@ import AdminDashboardHome from './pages/Admin/AdminDashboardHome';
 import SingleQuestionSolution from './components/SolutionPage/SingleQuestionSolution';
 import CourseDetails from './components/CoursesPage/CourseDetails';
 import AddNote from './pages/Admin/AddNote';
+import SubjectWiseSolution from './components/SolutionPage/SubjectWiseSolution';
+import AddSolution from './components/AddSolution';
 
 function App() {
 
@@ -47,6 +49,7 @@ function App() {
         <Route path="/solution" element={<Solution />} />
         <Route path="/solution/:id" element={<SingleQuestionSolution />} />
         <Route path="/tutor/:id" element={<TutorProfile />} />
+        <Route path="/subject-wise-solution" element={<SubjectWiseSolution />} />
       </Route>
 
       {/* Protected Dashboard Routes */}
@@ -62,6 +65,7 @@ function App() {
             <Route path='add-tutor' element={<AddTutor />} />
             <Route path='all-tutors' element={<AllTutors />} />
             <Route path='add-note' element={<AddNote />} />
+            <Route path='add-solution' element={<AddSolution />} />
             <Route path='all-questions' element={<AllQuestions />} />
           </>
         )}

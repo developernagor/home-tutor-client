@@ -53,7 +53,7 @@ const SolutionTable = () => {
                 <div className="flex justify-center gap-2">
                   {
                     item.subjects.map((subject, idx) => (
-                      <Link key={idx} to="/bangla">
+                      <Link key={idx} to="/subject-wise-solution">
                     <button className="btn">{subject}</button>
                   </Link>
                     ))
