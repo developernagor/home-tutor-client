@@ -49,7 +49,7 @@ function App() {
         <Route path="/solution" element={<Solution />} />
         <Route path="/solution/:id" element={<SingleQuestionSolution />} />
         <Route path="/tutor/:id" element={<TutorProfile />} />
-        <Route path="/subject-wise-solution" element={<SubjectWiseSolution />} />
+        <Route path="/subject-wise-solution/:id" element={<SubjectWiseSolution />} />
       </Route>
 
       {/* Protected Dashboard Routes */}

@@ -1,85 +1,87 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import React from "react";
-import { Link, useParams } from "react-router";
+import { useParams, Link } from "react-router";
 
 function SubjectWiseSolution() {
   const { id } = useParams();
-  console.log(id)
 
   const {
-    data: solution,
+    data: subjectWiseSolution = {},
     isLoading,
     isError,
     error,
   } = useQuery({
-    queryKey: ["solution", id],
-    queryFn: async() => {
-        const response = await axios.get(`${import.meta.env.VITE_API_URL}/solution/${id}`);
-        console.log(response.data);
-        return response.data;
-      
+    queryKey: ["subjectWiseSolution", id],
+    queryFn: async () => {
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/subject-wise-solution/${id}`);
+      return response.data;
     },
   });
 
   if (isLoading) {
-    return <p className="text-center text-blue-500">Loading solutions...</p>;
-  }
-
-  if (!solution || solution.length === 0 || !solution.questionId) {
     return (
-      <div className="flex flex-col justify-center items-center">
-        <p className="text-center text-4xl my-4 text-gray-500">
-          No solution found for this subject.
-        </p>
-        {/* <Link to="/dashboard/add-note">
-          <button className="btn bg-blue-600 text-white rounded-lg">
-            Add Your Answer
-          </button>
-        </Link> */}
+      <div className="flex justify-center items-center h-[50vh]">
+        <p className="text-xl text-blue-500 animate-pulse">Loading solution...</p>
       </div>
     );
   }
 
   if (isError) {
-    return <p className="text-center text-red-500">Error: {error.message}</p>;
+    return (
+      <div className="flex justify-center items-center h-[50vh]">
+        <p className="text-xl text-red-500">Error: {error.message}</p>
+      </div>
+    );
   }
 
-  // If no solution is found
-
-  return (
-    <div className="max-w-3xl mx-auto p-8 bg-white rounded-lg shadow-lg border border-gray-200">
-      <h2 className="text-3xl font-bold text-gray-900 mb-4 border-b pb-2">
-        {solution.noteTitle}
-      </h2>
-      <div className="mb-4">
-        <p className="text-md text-gray-600">
-          <strong>Class:</strong> {solution.noteClass}
-        </p>
-        <p className="text-md text-gray-600">
-          <strong>Subject:</strong> {solution.noteSubject}
-        </p>
-        <p className="text-md text-gray-600">
-          <strong>Chapter:</strong> {solution.noteChapter}
-        </p>
+  if (!subjectWiseSolution || !subjectWiseSolution.solutionId) {
+    return (
+      <div className="flex flex-col justify-center items-center h-[70vh] text-center">
+        <h2 className="text-3xl font-semibold text-gray-500 mb-4">
+          No solution found for this subject.
+        </h2>
+        <Link to="/dashboard/add-note">
+          <button className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition">
+            Add Your Solution
+          </button>
+        </Link>
       </div>
-      <p className="text-lg text-gray-800 leading-relaxed">
-        {solution.noteSolution}
-      </p>
-      {solution.solutionFile && (
-        <div className="mt-6 flex justify-center">
-          <img
-            src={solution.solutionFile}
-            alt="Solution"
-            className="w-full max-w-lg rounded-lg shadow-md border"
-          />
+    );
+  }
+
+  if (subjectWiseSolution.solutionId === id) {
+    return (
+      <div className="max-w-4xl mx-auto p-8 my-10 bg-white rounded-2xl shadow-2xl border border-gray-200">
+        <div className="mb-8 text-center">
+          <h1 className="text-2xl font-bold text-gray-800 mb-2">
+            {subjectWiseSolution.solutionSubject}
+          </h1>
+          <p className="text-gray-600">
+            Class {subjectWiseSolution.solutionClass} &bull; Chapter {subjectWiseSolution.solutionChapter}
+          </p>
         </div>
-      )}
-      <p className="text-sm text-gray-500 mt-6 text-right">
-        <em>Posted on: {new Date(solution.solutionTime).toLocaleString()}</em>
-      </p>
-    </div>
-  );
+
+        {subjectWiseSolution.solutionFile && (
+          <div className="flex justify-center mb-6">
+            <img
+              src={subjectWiseSolution.solutionFile}
+              alt="Solution"
+              className="w-full max-w-2xl rounded-lg shadow-md border"
+            />
+          </div>
+        )}
+
+        <div className="text-right">
+          <p className="text-sm text-gray-500">
+            Posted on: {new Date(subjectWiseSolution.solutionTime).toLocaleString()}
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  return null;
 }
 
 export default SubjectWiseSolution;

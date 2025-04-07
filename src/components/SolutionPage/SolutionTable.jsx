@@ -1,4 +1,6 @@
-import { Link } from "react-router";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { Link, useParams } from "react-router";
 
 const SolutionTable = () => {
 
@@ -36,36 +38,67 @@ const SolutionTable = () => {
       "subjects": ["Bangla 1st Paper", "Bangla 2nd Paper", "Englist 1st paper", "Englist 2nd paper", "Mathematics", "Science", "BGS", "Islam"]
     },
   ]
+
+
+  const {
+    data: subjectWiseSolution,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ["subjectWiseSolution"],
+    queryFn: async() => {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/subject-wise-solution`);
+        console.log(response.data);
+        return response.data;
+      
+    },
+  });
+
+  if (isLoading) {
+    return <p className="text-center text-blue-500">Loading solutions...</p>;
+  }
+  if (isError) {
+    return <p className="text-center text-red-500">Error: {error.message}</p>;
+  }
+
+
+
   return (
-    <>
-      <table className="w-full text-center border-collapse">
-        <thead>
-          <tr>
-            <th className="p-2 border-b">Class</th>
-            <th className="p-2 border-b">Subject</th>
-          </tr>
-        </thead>
-        <tbody>
-          {classListAndSubjectList.map((item, index) => (
-            <tr key={index}>
-              <td className="w-1/12 p-2 border-b border-r">{item.class}</td>
-              <td className="w-11/12 p-2 border-b">
-                <div className="flex justify-center gap-2">
-                  {
-                    item.subjects.map((subject, idx) => (
-                      <Link key={idx} to="/subject-wise-solution">
-                    <button className="btn">{subject}</button>
-                  </Link>
-                    ))
-                  }
-                </div>
-              </td>
+    <div className="p-4">
+      <h2 className="text-2xl font-bold mb-4">Subject Wise Solutions</h2>
+      <div className="overflow-x-auto">
+        <table className="table-auto w-full border-collapse">
+          <thead>
+            <tr className="bg-gray-200">
+              <th className="border px-4 py-2">Class</th>
+              <th className="border px-4 py-2">Subject</th>
+              <th className="border px-4 py-2">Chapter</th>
+              <th className="border px-4 py-2">Action</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </>
+          </thead>
+          <tbody>
+            {subjectWiseSolution.map((solution) => (
+              <tr key={solution._id}>
+                <td className="border px-4 py-2">{solution.solutionClass}</td>
+                <td className="border px-4 py-2">{solution.solutionSubject}</td>
+                <td className="border px-4 py-2">{solution.solutionChapter}</td>
+                <td className="border px-4 py-2">
+                  <Link
+                    to={`/subject-wise-solution/${solution.solutionId}`}
+                    className="text-blue-500 underline"
+                  >
+                    View Solution
+                  </Link>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
   );
+  
 };
 
 export default SolutionTable;
