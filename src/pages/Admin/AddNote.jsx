@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useLocation } from "react-router";
+import {v4 as uuidv4} from 'uuid';
 
 function AddNote() {
   const [loading, setLoading] = useState(false);
@@ -8,13 +9,10 @@ function AddNote() {
 
   const location = useLocation();
   const questionData = location.state?.question || {};
-  // console.log("Received question data", questionData)
-  // console.log(questionData)
 
   const {
     questionChapter,
     questionClass,
-    // questionDetails,
     questionId,
     questionSubject,
     questionTitle,
@@ -79,6 +77,10 @@ function AddNote() {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    
+    
+  
     let uploadedImageUrl = null;
 
     if (noteData.solutionFile) {
@@ -100,6 +102,7 @@ function AddNote() {
       }
     }
 
+
     // Prepare final note data for submission
     const finalNoteData = {
       ...noteData,
@@ -115,6 +118,26 @@ function AddNote() {
       );
       console.log("Note Added:", response.data);
       setSuccessMessage("Note added successfully!");
+
+      if(!noteData.questionId){
+        const questionId = uuidv4();
+        console.log(questionId)
+        const updatedData = {
+          // your updated fields
+          questionTitle: noteData.noteTitle,
+          questionSubject: noteData.noteSubject,
+          questionChapter: noteData.noteChapter,
+          questionClass: noteData.noteClass,
+          questionId,
+        };
+        if (noteData.questionId !== questionData.questionId) { 
+          await axios.post(`${import.meta.env.VITE_API_URL}/question`, updatedData);
+          console.log("Question posted successfully:",updatedData);
+        } else {
+          console.log("");
+        }
+      }
+
 
       // Reset form after successful submission
       setNoteData({
@@ -145,8 +168,8 @@ function AddNote() {
           <input
             type="text"
             name="noteTitle"
-            value={questionTitle}
-            readOnly
+            value={noteData.noteTitle}
+            
             onChange={handleInputChange}
             className="w-full p-2 border border-gray-300 rounded"
           />
@@ -158,8 +181,8 @@ function AddNote() {
           <input
             type="text"
             name="questionId"
-            value={questionId}
-            readOnly
+            value={noteData.questionId}
+            
             onChange={handleInputChange}
             className="w-full p-2 border border-gray-300 rounded"
           />
@@ -182,8 +205,8 @@ function AddNote() {
           <label className="block text-gray-700">Subject</label>
           <select
             name="noteSubject"
-            value={questionSubject}
-            readOnly
+            value={noteData.noteSubject}
+            
             onChange={handleInputChange}
             className="w-full p-2 border border-gray-300 rounded"
           >
@@ -220,8 +243,7 @@ function AddNote() {
           <input
             type="text"
             name="noteClass"
-            value={questionClass}
-            readOnly
+            value={noteData.noteClass}
             onChange={handleInputChange}
             className="w-full p-2 border border-gray-300 rounded"
           />
@@ -265,7 +287,7 @@ function AddNote() {
         {/* Submit Button */}
         <button
           type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded"
+          className="bg-blue-500 text-white px-4 py-2 rounded cursor-pointer"
           disabled={loading}
         >
           {loading ? "Adding..." : "Add Note"}

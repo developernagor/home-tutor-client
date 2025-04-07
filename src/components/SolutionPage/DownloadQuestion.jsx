@@ -67,6 +67,7 @@ const DownloadQuestion = () => {
       {/* Subject Filter */}
       <div className="filterQuestion flex justify-between">
         <div className="mt-4 flex items-center gap-2">
+          <h2 className="text-2xl font-bold">Class</h2>
           {/* <Filter className="w-5 h-5 text-gray-600" /> */}
           <select
             value={selectedClass}
@@ -82,6 +83,7 @@ const DownloadQuestion = () => {
         </div>
 
         <div className="mt-4 flex items-center gap-2">
+        <h2 className="text-2xl font-bold">Subject</h2>
           {/* <Filter className="w-5 h-5 text-gray-600" /> */}
           <select
             value={selectedSubject}
@@ -97,6 +99,7 @@ const DownloadQuestion = () => {
         </div>
 
         <div className="mt-4 flex items-center gap-2">
+        <h2 className="text-2xl font-bold">Chapter</h2>
           {/* <Filter className="w-5 h-5 text-gray-600" /> */}
           <select
             value={selectedChapter}

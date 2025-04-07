@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import Swal from 'sweetalert2';
@@ -43,20 +44,22 @@ function AddTutor() {
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     if (validateForm()) {
       // Process the tutor data
-      console.log('Tutor Added:', tutorData);
+      try{
+        const response = await axios.post(`${import.meta.env.VITE_API_URL}/tutor`, tutorData)
+        console.log(response.data)
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Tutor added successfully !",
+          showConfirmButton: false,
+          timer: 1500
+        });  
 
-      Swal.fire({
-                position: "center",
-                icon: "success",
-                title: "Tutor added successfully !",
-                showConfirmButton: false,
-                timer: 1500
-              });  
-      // Reset form after successful submission
+        // Reset form after successful submission
       setTutorData({
         tutorName: '',
         tutorSubject: '',
@@ -69,6 +72,15 @@ function AddTutor() {
       });
 
       navigate("/dashboard/all-tutors")
+      return response.data;
+      
+      }catch(error){
+        console.log(error.message)
+      }
+      console.log('Tutor Added:', tutorData);
+
+      
+      
     }
   };
 
@@ -182,7 +194,7 @@ function AddTutor() {
           {errors.tutorAvailability && <p className="text-red-500 text-sm">{errors.tutorAvailability}</p>}
         </div>
 
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">Add Tutor</button>
+        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded cursor-pointer">Add Tutor</button>
       </form>
     </div>
   );

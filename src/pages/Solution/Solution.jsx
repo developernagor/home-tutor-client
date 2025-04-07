@@ -1,18 +1,18 @@
-import React from 'react'
 import SolutionHero from '../../components/SolutionPage/SolutionHero'
-import SolutionFilterBar from '../../components/SolutionPage/SolutionFilterBar'
+import SolutionTable from '../../components/SolutionPage/SolutionTable'
 import SolutionSubmission from '../../components/SolutionPage/SolutionSubmission'
 import DownloadQuestion from '../../components/SolutionPage/DownloadQuestion'
 
 function Solution() {
+  
   return (
     <div>
       <SolutionHero></SolutionHero>
       <DownloadQuestion></DownloadQuestion>
-      <SolutionFilterBar></SolutionFilterBar>
+      <SolutionTable></SolutionTable>
       <SolutionSubmission></SolutionSubmission>
     </div>
   )
 }
 
-export default Solution
+export default Solution;

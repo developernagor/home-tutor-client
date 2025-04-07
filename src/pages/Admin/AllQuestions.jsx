@@ -15,7 +15,7 @@ function AllQuestions() {
       const response = await axios.get(
         `${import.meta.env.VITE_API_URL}/questions`
       );
-      console.log(response.data);
+      // console.log(response.data);
       return response.data;
     },
   });

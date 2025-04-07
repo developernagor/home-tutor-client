@@ -5,7 +5,7 @@ import { Link, useParams } from "react-router";
 
 function SingleQuestionSolution() {
   const { id } = useParams();
-    console.log(id);
+  console.log(id)
 
   const {
     data: solution,
@@ -14,11 +14,9 @@ function SingleQuestionSolution() {
     error,
   } = useQuery({
     queryKey: ["solution", id],
-    queryFn: async () => {
-        const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/solution/${id}`
-        );
-        console.log(solution);
+    queryFn: async() => {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/solution/${id}`);
+        console.log(response.data);
         return response.data;
       
     },
@@ -34,11 +32,11 @@ function SingleQuestionSolution() {
         <p className="text-center text-4xl my-4 text-gray-500">
           No solution found for this question.
         </p>
-        <Link to={`/solution/${id}`}>
+        {/* <Link to="/dashboard/add-note">
           <button className="btn bg-blue-600 text-white rounded-lg">
             Add Your Answer
           </button>
-        </Link>
+        </Link> */}
       </div>
     );
   }

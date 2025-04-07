@@ -12,14 +12,8 @@ function SolutionHero() {
       {/* Description */}
       <p className="text-gray-700 text-lg">
         Find and download educational solutions across different subjects.  
-        Submit your own solutions to help others and earn recognition!
-      </p>
+              </p>
 
-      {/* CTA Button */}
-      <button className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg flex items-center gap-2 mx-auto">
-        {/* <UploadCloud className="w-5 h-5" /> */}
-        Submit Your Solution
-      </button>
     </div>
   )
 }
