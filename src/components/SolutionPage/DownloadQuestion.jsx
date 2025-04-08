@@ -65,14 +65,15 @@ const DownloadQuestion = () => {
       </h2>
 
       {/* Subject Filter */}
-      <div className="filterQuestion flex justify-between">
+      <div className="filterQuestion flex justify-between gap-2">
         <div className="mt-4 flex items-center gap-2">
-          <h2 className="text-2xl font-bold">Class</h2>
+          <h2 className="md:hidden text-xl md:text-2xl font-semibold md:font-bold">Cls</h2>
+          <h2 className="hidden md:block text-xl md:text-2xl font-semibold md:font-bold">Class</h2>
           {/* <Filter className="w-5 h-5 text-gray-600" /> */}
           <select
             value={selectedClass}
             onChange={(e) => setSelectedClass(e.target.value)}
-            className="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="px-1 md:px-3 py-1 md:py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             {uniqueClasses.map((cls) => (
               <option key={cls} value={cls}>
@@ -83,12 +84,13 @@ const DownloadQuestion = () => {
         </div>
 
         <div className="mt-4 flex items-center gap-2">
-        <h2 className="text-2xl font-bold">Subject</h2>
+        <h2 className="md:hidden text-xl md:text-2xl font-semibold md:font-bold">Sub</h2>
+        <h2 className="hidden md:block text-xl md:text-2xl font-semibold md:font-bold">Subject</h2>
           {/* <Filter className="w-5 h-5 text-gray-600" /> */}
           <select
             value={selectedSubject}
             onChange={(e) => setSelectedSubject(e.target.value)}
-            className="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="px-1 md:px-3 py-1 md:py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             {uniqueSubjects.map((sub) => (
               <option key={sub} value={sub}>
@@ -99,12 +101,13 @@ const DownloadQuestion = () => {
         </div>
 
         <div className="mt-4 flex items-center gap-2">
-        <h2 className="text-2xl font-bold">Chapter</h2>
+        <h2 className="md:hidden text-xl md:text-2xl font-semibold md:font-bold">Chap</h2>
+        <h2 className="hidden md:block text-xl md:text-2xl font-semibold md:font-bold">Chapter</h2>
           {/* <Filter className="w-5 h-5 text-gray-600" /> */}
           <select
             value={selectedChapter}
             onChange={(e) => setSelectedChapter(e.target.value)}
-            className="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="px-1 md:px-3 py-1 md:py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             {uniqueChapters.map((chap) => (
               <option key={chap} value={chap}>

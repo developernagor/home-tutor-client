@@ -86,9 +86,16 @@ function QuestionSubmission() {
   return (
     <section className="py-10 px-4 bg-gray-100">
   <div className="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-lg">
-    <h2 className="text-2xl font-bold mb-4">Post Your Question</h2>
+    <h2 className="text-4xl font-bold mb-4">Write Your Question</h2>
     <form onSubmit={handleQuestionSubmission}>
+      <lebel>
+        <h1 className='text-2xl font-semibold mb-2'>Question</h1>
+      </lebel>
       <input type="text" name="question" placeholder="Enter your question..." className="w-full p-3 border rounded-lg mb-4"/>
+      
+      <lebel>
+        <h1 className='text-2xl font-semibold mb-2'>Class</h1>
+      </lebel>
       <select name='class' className="w-full p-3 border rounded-lg mb-4">
         <option>Select Class</option>
         <option value="One">One</option>
@@ -104,6 +111,10 @@ function QuestionSubmission() {
         <option value="Eleven">Eleven</option>
         <option value="Other">Other</option>
       </select>
+
+      <lebel>
+        <h1 className='text-2xl font-semibold mb-2'>Subject</h1>
+      </lebel>
       <select name='category' className="w-full p-3 border rounded-lg mb-4">
   <option>Select Subject</option>
   {subjectList.map((subject, index) => (
@@ -115,7 +126,7 @@ function QuestionSubmission() {
       <div className="mb-4 flex gap-2">
           <input
             type="text"
-            placeholder="Enter new subject"
+            placeholder="Enter new subject if subject is not at the list"
             value={newSubject}
             onChange={handleNewSubjectChange}
             className="w-full p-2 border border-gray-300 rounded"
@@ -130,7 +141,14 @@ function QuestionSubmission() {
         </div>
 
 
+        <lebel>
+        <h1 className='text-2xl font-semibold mb-2'>Chapter / Topic</h1>
+      </lebel>
       <input type="number,text" name="chapter" placeholder="Enter chapter or topic" className="w-full p-3 border rounded-lg mb-4"/>
+      
+      <lebel>
+        <h1 className='text-2xl font-semibold mb-2'>Brief description</h1>
+      </lebel>
       <textarea name='questionDetails' placeholder="Provide more details (optional)" className="w-full p-3 border rounded-lg mb-4"></textarea>
       <button className="w-full bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700">
         Submit Question
