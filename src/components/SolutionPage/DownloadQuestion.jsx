@@ -129,7 +129,7 @@ const DownloadQuestion = () => {
           <tbody>
             {filteredData.length > 0 ? (
               filteredData.map((item, index) => (
-                <tr key={item.id} className="hover:bg-gray-100">
+                <tr key={index} className="hover:bg-gray-100">
                   <td className="border border-gray-300 p-3 text-center">
                     {index + 1}
                   </td>

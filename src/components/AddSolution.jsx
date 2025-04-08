@@ -88,12 +88,22 @@ console.log(solutionId)
     }
 
 
+    
+
+    
+
     // Prepare final note data for submission
     const finalSolutionData = {
       ...solutionData,
+      solutionId: solutionId,
       solutionTime: new Date(),
       solutionFile: uploadedImageUrl,
     };
+
+    if (!solutionData.solutionSubject || !solutionData.solutionClass || !solutionData.solutionChapter || !solutionData.solutionFile) {
+      setErrors({ form: "Please fill in all fields!" });
+      return;
+    }
 
     // Send data to backend
     try {
@@ -106,7 +116,7 @@ console.log(solutionId)
 
       // Reset form after successful submission
       setSolutionData({
-        solutionId: "",
+        solutionId: uuidv4(),
         solutionSubject: "",
         solutionClass: "",
         solutionChapter: "",

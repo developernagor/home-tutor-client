@@ -41,7 +41,7 @@ function SubjectWiseSolution() {
         <h2 className="text-3xl font-semibold text-gray-500 mb-4">
           No solution found for this subject.
         </h2>
-        <Link to="/dashboard/add-note">
+        <Link to="/dashboard/add-solution">
           <button className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition">
             Add Your Solution
           </button>
