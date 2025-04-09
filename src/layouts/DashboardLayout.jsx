@@ -1,11 +1,30 @@
+import { useContext } from 'react';
 import { Outlet, Link } from 'react-router';
+import { AuthContext } from '../providers/AuthProvider';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
 
 function DashboardLayout() {
-  const user = {
-    name: "Mehedi",
-    email: "devmehedi@gmail.com",
-    role: "admin"
-  }
+ const {user} = useContext(AuthContext)
+
+     const {data: dbUser = {}, isLoading, isError, error } = useQuery({
+         queryKey: ["user"],
+         queryFn: async() => {
+             const res = await axios.get(`${import.meta.env.VITE_API_URL}/user/${user?.email}`)
+             console.log(res.data)
+             return res.data;
+         }
+     })
+     
+     if(isLoading){
+      return <p>Loading.........</p>
+     }
+
+     if(isError){
+      console.log("Error:", error.message)
+     }
+
+
 
 
   return (
@@ -16,7 +35,7 @@ function DashboardLayout() {
         <ul className="mt-2 md:mt-4 text-sm md:text-2xl space-y-1 md:space-y-2">
           
           {
-            user.role === "admin" 
+            dbUser.role === "admin" 
             ?
             <>
             <li><Link to="/" className="text-white">Home</Link></li>

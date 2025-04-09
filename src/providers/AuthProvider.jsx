@@ -11,6 +11,10 @@ function AuthProvider({ children }) {
     const [error,setError] = useState("")
 
 
+
+
+
+
     const createUser = (email,password) => {
         setLoading(true);
         return createUserWithEmailAndPassword(auth, email, password);
@@ -34,7 +38,7 @@ function AuthProvider({ children }) {
             // save current user in db
             if(currentUser) {
                 try {
-                   await axios.post(`${import.meta.env.VITE_API_URL}/users`,{
+                   await axios.post(`${import.meta.env.VITE_API_URL}/users/${currentUser?.email}`,{
                         name: currentUser?.displayName || "Anonymous User",
               email: currentUser?.email,
               image: currentUser?.photoURL || "",

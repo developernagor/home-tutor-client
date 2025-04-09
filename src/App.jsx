@@ -11,7 +11,7 @@ import SignUp from './pages/SignUp/SignUp';
 import Solution from './pages/Solution/Solution';
 import TutorProfile from './components/TutorProfile';
 import DashboardLayout from './layouts/DashboardLayout';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import DashboardHome from './components/DashboardHome';
 import AddCourse from './pages/Admin/AddCourse';
 import AddTutor from './pages/Admin/AddTutor';
@@ -24,16 +24,17 @@ import CourseDetails from './components/CoursesPage/CourseDetails';
 import AddNote from './pages/Admin/AddNote';
 import SubjectWiseSolution from './components/SolutionPage/SubjectWiseSolution';
 import AddSolution from './components/AddSolution';
+import { AuthContext } from './providers/AuthProvider';
 
 function App() {
 
-  const user = {
-    name: "Mehedi",
-    email: "devmehedi@gmail.com",
-    role: "admin" // This should be dynamically set via authentication (e.g., Firebase, JWT)
-  };
-
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const user = useContext(AuthContext)
+  console.log(user)
+  // const user = {
+  //   name: "Mehedi",
+  //   email: "devmehedi@gmail.com",
+  //   role: "admin" // This should be dynamically set via authentication (e.g., Firebase, JWT)
+  // };
 
   return (
     <Routes>
@@ -53,32 +54,20 @@ function App() {
       </Route>
 
       {/* Protected Dashboard Routes */}
-      <Route path="/dashboard" element={isAuthenticated ? <DashboardLayout /> : <Navigate to="/login" />} >
+      <Route path="/dashboard" element={user ? <DashboardLayout /> : <Navigate to="/login" />} >
         
         {/* Admin or User Dashboard */}
         <Route index element={user.role === "admin" ? <AdminDashboardHome /> : <DashboardHome />} />
 
         {/* Admin Routes */}
-        {user.role === "admin" && (
-          <>
             <Route path='add-course' element={<AddCourse />} />
             <Route path='add-tutor' element={<AddTutor />} />
             <Route path='all-tutors' element={<AllTutors />} />
             <Route path='add-note' element={<AddNote />} />
             <Route path='add-solution' element={<AddSolution />} />
             <Route path='all-questions' element={<AllQuestions />} />
-          </>
-        )}
 
-        {/* User Routes */}
-        {user.role !== "admin" && (
-          <>
-            {/* You can add specific user-related routes here */}
-          </>
-        )}
-        
-        {/* <Route path="analytics" element={<Analytics />} /> */}
-        {/* <Route path="settings" element={<Settings />} /> */}
+  
       </Route>
     </Routes>
   );
