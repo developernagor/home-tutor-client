@@ -8,8 +8,7 @@ export const AuthContext = createContext(null);
 function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
-
-    console.log(user)
+    const [error,setError] = useState("")
 
 
     const createUser = (email,password) => {
@@ -19,9 +18,7 @@ function AuthProvider({ children }) {
 
     const signInUser = (email, password) => {
         setLoading(true);
-        
         return signInWithEmailAndPassword(auth, email, password);
-        
     }
 
     const signOutUser = () => {
@@ -30,18 +27,14 @@ function AuthProvider({ children }) {
     }
 
     useEffect(() => {
-        // const auth = getAuth();
-        // console.log(auth)
-
         const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
             setUser(currentUser);
-            console.log(currentUser)
-            
+            console.log("current user", currentUser)
             setLoading(false);
             // save current user in db
             if(currentUser) {
                 try {
-                   await axios.post(`${import.meta.env.VITE_API_URL}/users/${currentUser?.email}`,{
+                   await axios.post(`${import.meta.env.VITE_API_URL}/users`,{
                         name: currentUser?.displayName || "Anonymous User",
               email: currentUser?.email,
               image: currentUser?.photoURL || "",
@@ -51,16 +44,11 @@ function AuthProvider({ children }) {
                     console.error("Error saving user to database:", error.message);
                 }
             }
-            
         });
 
         return () => unsubscribe(); // Cleanup subscription on unmount
     }, []);
 
-
-
-
-    
     const authInfo = {
         user,
         loading,
