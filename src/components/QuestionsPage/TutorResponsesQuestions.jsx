@@ -30,9 +30,9 @@ function TutorResponsesQuestions() {
     {answer.map((response, index) => (
       <div key={index} className="border p-6 rounded-lg shadow-md flex items-center">
         <div className='w-9/12'>
-        <h3 className="text-lg font-semibold">{response.noteTitle}</h3>
-        <p className="mt-2 font-bold text-blue-600">{response.noteSolution}</p>
-        <p className="text-yellow-500 text-lg mt-2">{response.noteDescription}</p>
+        <h3 className="text-lg font-semibold">Question: {response.noteTitle}</h3>
+        <p className="mt-2 font-bold text-blue-600">Answer: {response.noteSolution}</p>
+        <p className="text-yellow-500 text-lg mt-2">Details: {response.noteDescription}</p>
         </div>
         <div className='w-3/12'>
           <p className='bg-black mb-2 text-white text-center rounded-2xl p-1 text-xs'>{response.noteSubject}</p>
