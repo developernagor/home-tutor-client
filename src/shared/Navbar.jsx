@@ -4,7 +4,30 @@ import { AuthContext } from "../providers/AuthProvider";
 
 function Navbar() {
   const { user, signOutUser } = useContext(AuthContext);
-  console.log(user);
+  // console.log(user);
+
+
+  const ifLogin = (
+    <>
+      <Link
+        onClick={signOutUser}
+        className="bg-white text-blue-600 px-4 py-2 rounded-lg hover:bg-gray-200"
+      >
+        Logout
+      </Link>
+    </>
+  );
+  const ifLogOut = (
+    <>
+      <Link
+        to="/login"
+        className="bg-white text-blue-600 px-4 py-2 rounded-lg hover:bg-gray-200"
+      >
+        Login
+      </Link>
+    </>
+  );
+
 
   const navMenuItem = (
     <>
@@ -26,9 +49,9 @@ function Navbar() {
       <Link to="/contact" className="hover:text-gray-300">
         Contact
       </Link>
-      <Link to="/dashboard" className="hover:text-gray-300">
-        Dashboard
-      </Link>
+      {user?.email && (
+        <Link to="/dashboard" className="hover:text-gray-300">Dashboard</Link>
+      )}
     </>
   );
 
@@ -52,45 +75,18 @@ function Navbar() {
       <Link to="/contact" className="mb-2 hover:text-white">
         Contact
       </Link>
-      <Link to="/dashboard" className="mb-2 hover:text-white">
-        Dashboard
-      </Link>
+      {user?.email && (
+        <Link to="/dashboard" className="hover:text-gray-300 mb-2">Dashboard</Link>
+      )}
 
-      <Link
-        to="/login"
-        className="mb-2 bg-white text-blue-600 px-4 py-2 rounded-lg hover:bg-gray-200"
-      >
-        Login
-      </Link>
-      <Link
-        to="/signup"
-        className="bg-yellow-400 text-blue-900 px-4 py-2 rounded-lg hover:bg-yellow-500"
-      >
-        Sign Up
-      </Link>
+      {
+        user?.email ? ifLogin : ifLogOut
+      }
+
     </>
   );
 
-  const ifLogin = (
-    <>
-      <Link
-        onClick={signOutUser}
-        className="bg-white text-blue-600 px-4 py-2 rounded-lg hover:bg-gray-200"
-      >
-        Logout
-      </Link>
-    </>
-  );
-  const ifLogOut = (
-    <>
-      <Link
-        to="/login"
-        className="bg-white text-blue-600 px-4 py-2 rounded-lg hover:bg-gray-200"
-      >
-        Login
-      </Link>
-    </>
-  );
+  
 
   return (
     <div className="navbar bg-blue-600 text-white p-4 shadow-sm">

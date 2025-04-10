@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
 function DashboardLayout() {
- const {user} = useContext(AuthContext)
+ const {user, signOutUser} = useContext(AuthContext)
 
      const {data: dbUser = {}, isLoading, isError, error } = useQuery({
          queryKey: ["user"],
@@ -50,9 +50,11 @@ function DashboardLayout() {
             <>
             <li><Link to="/" className="text-white">Home</Link></li>
             </>
-          }
+}
 
         </ul>
+        <button onClick={signOutUser} className="bg-white mt-6 text-blue-600 px-4 py-2 rounded-lg cursor-pointer hover:bg-gray-200">Logout</button>
+
       </aside>
 
       {/* Main Content */}

@@ -11,7 +11,7 @@ import SignUp from './pages/SignUp/SignUp';
 import Solution from './pages/Solution/Solution';
 import TutorProfile from './components/TutorProfile';
 import DashboardLayout from './layouts/DashboardLayout';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import DashboardHome from './components/DashboardHome';
 import AddCourse from './pages/Admin/AddCourse';
 import AddTutor from './pages/Admin/AddTutor';
@@ -25,6 +25,7 @@ import AddNote from './pages/Admin/AddNote';
 import SubjectWiseSolution from './components/SolutionPage/SubjectWiseSolution';
 import AddSolution from './components/AddSolution';
 import { AuthContext } from './providers/AuthProvider';
+import PrivateRoute from './components/PrivateRoute';
 
 function App() {
 
@@ -49,7 +50,7 @@ function App() {
       </Route>
 
       {/* Protected Dashboard Routes */}
-      <Route path="/dashboard" element={user ? <DashboardLayout /> : <Navigate to="/login" />} >
+      <Route path="/dashboard" element={<PrivateRoute> <DashboardLayout></DashboardLayout></PrivateRoute>} >
         
         {/* Admin or User Dashboard */}
         <Route index element={user.role === "admin" ? <AdminDashboardHome /> : <DashboardHome />} />
