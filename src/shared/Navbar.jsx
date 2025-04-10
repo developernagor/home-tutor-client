@@ -89,12 +89,6 @@ function Navbar() {
       >
         Login
       </Link>
-      <Link
-        to="/signup"
-        className="bg-yellow-400 text-blue-900 px-4 py-2 rounded-lg hover:bg-yellow-500"
-      >
-        Sign Up
-      </Link>
     </>
   );
 

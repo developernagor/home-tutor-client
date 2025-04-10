@@ -1,9 +1,11 @@
 import React, { useContext, useState } from "react";
-import { useNavigate } from "react-router"; // Fix useNavigate import
+import { useNavigate } from "react-router";
 import { AuthContext } from "../../providers/AuthProvider";
 import axios from "axios";
 import { updateProfile } from "firebase/auth";
-import { Link } from "react-router"; // Fix missing Link import
+import { Link } from "react-router";
+import { motion } from "framer-motion"; // Added animation
+import { Loader2 } from "lucide-react"; // Spinner icon
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
@@ -11,9 +13,8 @@ const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_ke
 function SignUp() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [loading, setLoading] = useState(false); // Added loading state
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
   const { createUser } = useContext(AuthContext);
 
   const handleRegister = async (e) => {
@@ -46,9 +47,7 @@ function SignUp() {
     }
 
     try {
-      if (!image) {
-        throw new Error("No image file selected");
-      }
+      if (!image) throw new Error("No image file selected");
 
       const imageFormData = new FormData();
       imageFormData.append("image", image);
@@ -63,11 +62,8 @@ function SignUp() {
         const userCredential = await createUser(email, password);
         const user = userCredential.user;
 
-        // Update profile with displayName and photoURL
-        await updateProfile(user, {
-          displayName: name,
-          photoURL: photoURL,
-        });
+        // Update profile
+        await updateProfile(user, { displayName: name, photoURL });
 
         setSuccess("User registered successfully!");
         form.reset();
@@ -84,95 +80,97 @@ function SignUp() {
   };
 
   return (
-    <div className="hero bg-base-200">
-      <div className="hero-content flex-col lg:flex-row-reverse">
-        <div className="text-center lg:text-left w-96">
-          {/* Add Lottie animation here if needed */}
-        </div>
-        <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
-          <h1 className="ml-8 text-3xl font-bold">Register now!</h1>
-          <form onSubmit={handleRegister} className="card-body p-2">
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Name</span>
-              </label>
-              <input
-                type="text"
-                placeholder="Name"
-                name="name"
-                className="input input-bordered"
-                required
-              />
-            </div>
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Email</span>
-              </label>
-              <input
-                type="email"
-                name="email"
-                placeholder="email"
-                className="input input-bordered"
-                required
-              />
-            </div>
+    <div className="min-h-screen bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 flex items-center justify-center p-6">
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="card w-full max-w-md bg-white/80 backdrop-blur-md shadow-xl rounded-2xl p-8"
+      >
+        <h2 className="text-3xl font-bold text-center mb-6 text-indigo-600">
+          Create Account
+        </h2>
 
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Photo</span>
-              </label>
-              <input
-                type="file"
-                accept="image/*"
-                name="image"
-                required
-                className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              />
-            </div>
+        <form onSubmit={handleRegister} className="space-y-4">
+          <div>
+            <label className="label-text">Name</label>
+            <input
+              type="text"
+              name="name"
+              placeholder="Your Name"
+              className="input input-bordered w-full mt-1"
+              required
+            />
+          </div>
 
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Password</span>
-              </label>
-              <input
-                type="password"
-                name="password"
-                placeholder="password"
-                className="input input-bordered"
-                required
-              />
-              <label className="label">
-                <a href="#" className="label-text-alt link link-hover">
-                  Forgot password?
-                </a>
-              </label>
-            </div>
+          <div>
+            <label className="label-text">Email</label>
+            <input
+              type="email"
+              name="email"
+              placeholder="Your Email"
+              className="input input-bordered w-full mt-1"
+              required
+            />
+          </div>
 
-            {error && (
-              <p className="text-sm text-red-500">
-                <strong>Error:</strong> {error}
-              </p>
-            )}
-            {success && (
-              <p className="text-sm text-green-500">
-                <strong>Success:</strong> {success}
-              </p>
-            )}
+          <div>
+            <label className="label-text">Photo</label>
+            <input
+              type="file"
+              accept="image/*"
+              name="image"
+              required
+              className="file-input file-input-bordered w-full mt-1"
+            />
+          </div>
 
-            <div className="form-control">
-              <button className="btn btn-primary" disabled={loading}>
-                {loading ? "Registering..." : "Register"}
-              </button>
-            </div>
-          </form>
-          <p>
-            If you already have an account, please{" "}
-            <Link to="/login" className="text-blue-600">
-              Login
-            </Link>
-          </p>
-        </div>
-      </div>
+          <div>
+            <label className="label-text">Password</label>
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              className="input input-bordered w-full mt-1"
+              required
+            />
+          </div>
+
+          {error && (
+            <p className="text-red-500 text-sm">
+              <strong>Error:</strong> {error}
+            </p>
+          )}
+          {success && (
+            <p className="text-green-500 text-sm">
+              <strong>Success:</strong> {success}
+            </p>
+          )}
+
+          <div className="flex justify-center">
+            <button
+              className="btn btn-primary w-full mt-4 flex items-center justify-center gap-2"
+              disabled={loading}
+            >
+              {loading ? (
+                <>
+                  <Loader2 className="animate-spin" size={20} />
+                  Registering...
+                </>
+              ) : (
+                "Register"
+              )}
+            </button>
+          </div>
+        </form>
+
+        <p className="mt-6 text-center text-sm">
+          Already have an account?{" "}
+          <Link to="/login" className="text-indigo-600 font-semibold hover:underline">
+            Login here
+          </Link>
+        </p>
+      </motion.div>
     </div>
   );
 }

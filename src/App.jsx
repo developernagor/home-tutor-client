@@ -29,12 +29,7 @@ import { AuthContext } from './providers/AuthProvider';
 function App() {
 
   const user = useContext(AuthContext)
-  console.log(user)
-  // const user = {
-  //   name: "Mehedi",
-  //   email: "devmehedi@gmail.com",
-  //   role: "admin" // This should be dynamically set via authentication (e.g., Firebase, JWT)
-  // };
+  // console.log(user)
 
   return (
     <Routes>
