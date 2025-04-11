@@ -1,2 +1,16 @@
 @import "tailwindcss";
 @plugin "daisyui";
+
+/* @keyframes slide {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+  
+  .animate-slide:hover {
+    animation: slide 20s linear infinite;
+  } */
+  

@@ -5,11 +5,13 @@ import HowItWorks from '../../components/HomePage/HowItWorks'
 import DownloadPDF from '../../components/HomePage/DownloadPDF'
 import Testimonial from '../../components/HomePage/Testimonial'
 import CallToAction from '../../components/HomePage/CallToAction'
+import Notice from '../../components/HomePage/Notice'
 
 function Home() {
   return (
     <div>
       <Banner></Banner>
+      <Notice></Notice>
       <FeaturedTutors></FeaturedTutors>
       <HowItWorks></HowItWorks>
       <DownloadPDF></DownloadPDF>
