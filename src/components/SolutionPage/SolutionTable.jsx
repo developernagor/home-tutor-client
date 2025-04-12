@@ -85,7 +85,8 @@ const SolutionTable = () => {
                 <td className="border px-4 py-2">{solution.solutionChapter}</td>
                 <td className="border px-4 py-2">
                   <Link
-                    to={`/subject-wise-solution/${solution.solutionId}`}
+                    to={solution.solutionFile}
+                    target="_blank"
                     className="text-blue-500 underline"
                   >
                     View Solution

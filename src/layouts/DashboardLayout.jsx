@@ -24,9 +24,6 @@ function DashboardLayout() {
       console.log("Error:", error.message)
      }
 
-
-
-
   return (
     <div className="flex h-screen">
       {/* Sidebar */}

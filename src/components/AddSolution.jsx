@@ -9,10 +9,15 @@ function AddSolution() {
   const [subjectList, setSubjectList] = useState([
     "Bangla",
     "English",
-    "Ict",
+    "ICT",
     "Science",
     "Mathematics",
     "Islamic Studies",
+    "Physics",
+    "Chemistry",
+    "Biology",
+    "Agriculture",
+    "Home Science",
   ]);
   const [newSubject, setNewSubject] = useState(""); // State for new subject
 
@@ -22,6 +27,7 @@ function AddSolution() {
     solutionSubject:  "",
     solutionClass:  "",
     solutionChapter:  "",
+    solutionPdfLink: "",
     solutionFile: null,
   });
 
@@ -55,7 +61,7 @@ function AddSolution() {
   const addNewSubject = () => {
     if (newSubject.trim() && !subjectList.includes(newSubject.trim())) {
       setSubjectList((prevSubjects) => [...prevSubjects, newSubject.trim()]);
-      setNewSubject(""); // Clear the input after adding
+      // setNewSubject(""); 
     }
   };
 
@@ -100,7 +106,7 @@ console.log(solutionId)
       solutionFile: uploadedImageUrl,
     };
 
-    if (!solutionData.solutionSubject || !solutionData.solutionClass || !solutionData.solutionChapter || !solutionData.solutionFile) {
+    if (!solutionData.solutionSubject || !solutionData.solutionClass || !solutionData.solutionChapter ) {
       setErrors({ form: "Please fill in all fields!" });
       return;
     }
@@ -120,6 +126,7 @@ console.log(solutionId)
         solutionSubject: "",
         solutionClass: "",
         solutionChapter: "",
+        solutionPdfLink: "",
         solutionFile: null,
       });
 
@@ -204,6 +211,18 @@ console.log(solutionId)
             type="text"
             name="solutionChapter"
             value={ solutionData.solutionChapter }
+            onChange={handleInputChange}
+            className="w-full p-2 border border-gray-300 rounded"
+          />
+        </div>
+
+        {/* PDF Link */}
+        <div className="mb-4">
+          <label className="block text-gray-700">PDF Link</label>
+          <input
+            type="text"
+            name="solutionPdfLink"
+            value={ solutionData.solutionPdfLink }
             onChange={handleInputChange}
             className="w-full p-2 border border-gray-300 rounded"
           />
