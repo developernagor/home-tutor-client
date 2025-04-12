@@ -119,7 +119,20 @@ const DownloadPDF = () => {
           </thead>
           <tbody>
             {academicBooks.map((book, index) => (
-              <tr key={index} className="border-b">
+              <tr key={index} 
+              className={`
+                border-b transition-all hover:scale-[1.01] hover:shadow-md 
+                ${book.class === "One" ? "bg-red-100" : 
+                book.class === "Two" ? "bg-amber-100" : 
+                book.class === "Three" ? "bg-purple-100" : 
+                book.class === "Four" ? "bg-green-100" : 
+                book.class === "Five" ? "bg-gray-100" : 
+                book.class === "Six" ? "bg-violet-100" : 
+                book.class === "Seven" ? "bg-yellow-100" : 
+                book.class === "Eight" ? "bg-orange-100" : 
+                book.class === "Nine-Ten" ? "bg-blue-100" : 
+                "bg-white"}
+              `}>
                 <td className="py-1 md:py-3 md:px-6 text-center">{book.class}</td>
                 <td className="py-1 md:py-3 md:px-6 text-center">{book.title}</td>
                 <td className="py-1 md:py-3 md:px-6 text-center">{book.author}</td>
