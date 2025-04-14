@@ -26,6 +26,7 @@ import SubjectWiseSolution from './components/SolutionPage/SubjectWiseSolution';
 import AddSolution from './components/AddSolution';
 import { AuthContext } from './providers/AuthProvider';
 import PrivateRoute from './components/PrivateRoute';
+import Blog from './pages/Blog/Blog';
 
 function App() {
 
@@ -40,6 +41,7 @@ function App() {
         <Route path="/courses" element={<Courses />} />
         <Route path="/courses/:courseId" element={<CourseDetails />} /> {/* Simplified CourseDetails route */}
         <Route path="/ask-question" element={<AskQuestions />} />
+        <Route path="/blog" element={<Blog />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />

@@ -19,6 +19,7 @@ function QuestionSubmission() {
       "Islamic Studies",
       "Economics",
       "Agriculture",
+      "ICT"
     ]);
     
 

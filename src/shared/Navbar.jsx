@@ -46,6 +46,9 @@ function Navbar() {
       <Link to="/solution" className="hover:text-gray-300">
         Solution
       </Link>
+      <Link to="/blog" className="hover:text-gray-300">
+        Blog
+      </Link>
       <Link to="/contact" className="hover:text-gray-300">
         Contact
       </Link>

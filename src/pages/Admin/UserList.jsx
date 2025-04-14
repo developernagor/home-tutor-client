@@ -1,9 +1,12 @@
 // UserList.jsx
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import React from 'react';
+import React, { useContext } from 'react';
+import {AuthContext} from "../../providers/AuthProvider"
 
 const UserList = () => {
+  const {user} = useContext(AuthContext)
+  console.log(user)
 
     const {data: allUser = {}, isLoading, isError, error } = useQuery({
         queryKey: ["allUser"],
