@@ -92,12 +92,6 @@ console.log(solutionId)
         return;
       }
     }
-
-
-    
-
-    
-
     // Prepare final note data for submission
     const finalSolutionData = {
       ...solutionData,

@@ -75,6 +75,9 @@ function Navbar() {
       <Link to="/solution" className="mb-2 hover:text-white">
         Solution
       </Link>
+      <Link to="/blog" className="hover:text-gray-300">
+        Blog
+      </Link>
       <Link to="/contact" className="mb-2 hover:text-white">
         Contact
       </Link>

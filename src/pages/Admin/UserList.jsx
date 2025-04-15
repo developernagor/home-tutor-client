@@ -42,7 +42,7 @@ const UserList = () => {
               </thead>
               <tbody>
                 {allUser.map((user, index) => (
-                  <tr key={user.id} className="border-b hover:bg-gray-50">
+                  <tr key={index} className="border-b hover:bg-gray-50">
                     <td className="py-4 px-6">{index + 1}</td>
                     <td className="py-4 px-6 font-medium">{user.name}</td>
                     <td className="py-4 px-6 text-gray-600">{user.email}</td>

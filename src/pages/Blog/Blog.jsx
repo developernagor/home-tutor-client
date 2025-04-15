@@ -1,4 +1,6 @@
 // src/pages/Blog.jsx
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 import React from "react";
 
 const blogPosts = [
@@ -25,22 +27,42 @@ const blogPosts = [
   },
 ];
 
+
+
 const Blog = () => {
+
+  const {data: blogData, isLoading, isError, error} = useQuery({
+    queryKey: ["blogData"],
+    queryFn: async() => {
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/blog`);
+      return res.data;
+    }
+  })
+  
+  if (isLoading) {
+    return <p className="text-center text-blue-500">Loading all questions...</p>;
+  }
+  
+  if (isError) {
+    return <p className="text-center text-red-500">Error: {error.message}</p>;
+  }
   return (
     <div className="max-w-7xl mx-auto px-4 py-12">
       <h1 className="text-4xl font-bold text-center mb-12">Our Blog</h1>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {blogPosts.map((post) => (
+      <div 
+      // className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+      >
+        {blogData.map((blog, index) => (
           <div
-            key={post.id}
-            className="bg-white shadow-md rounded-2xl p-6 hover:shadow-xl transition"
+            key={index}
+            className="bg-white border mb-4 shadow-md rounded-2xl p-6 hover:shadow-xl transition"
           >
-            <h2 className="text-2xl font-semibold mb-3">{post.title}</h2>
-            <p className="text-gray-600 mb-4">{post.description}</p>
+            <h2 className="text-2xl font-semibold mb-3">{blog.blogTitle}</h2>
+            <p className="text-gray-600 mb-4">{blog.blogDescription}</p>
             <div className="flex items-center justify-between text-sm text-gray-500">
-              <span>{post.author}</span>
-              <span>{post.date}</span>
+              <span>{blog.author}</span>
+              <span>{blog.blogUploadTime}</span>
             </div>
           </div>
         ))}

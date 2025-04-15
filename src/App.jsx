@@ -27,6 +27,7 @@ import AddSolution from './components/AddSolution';
 import { AuthContext } from './providers/AuthProvider';
 import PrivateRoute from './components/PrivateRoute';
 import Blog from './pages/Blog/Blog';
+import AddBlog from './pages/Blog/AddBlog';
 
 function App() {
 
@@ -63,6 +64,7 @@ function App() {
             <Route path='all-tutors' element={<AllTutors />} />
             <Route path='add-note' element={<AddNote />} />
             <Route path='add-solution' element={<AddSolution />} />
+            <Route path='add-blog' element={<AddBlog />} />
             <Route path='all-questions' element={<AllQuestions />} />
 
   
