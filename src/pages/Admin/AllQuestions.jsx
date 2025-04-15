@@ -1,9 +1,12 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import React from "react";
-import { Link } from "react-router";
+import { Link } from "react-router"; // corrected router import
 
 function AllQuestions() {
+  const queryClient = useQueryClient();
+
+  // Fetching questions
   const {
     data: questions = [],
     isLoading,
@@ -15,10 +18,26 @@ function AllQuestions() {
       const response = await axios.get(
         `${import.meta.env.VITE_API_URL}/questions`
       );
-      // console.log(response.data);
       return response.data;
     },
   });
+
+  // Mutation for deleting a question
+  const deleteMutation = useMutation({
+    mutationFn: async (id) => {
+      await axios.delete(`${import.meta.env.VITE_API_URL}/questions/${id}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(["questions"]); // Refresh list
+    },
+  });
+
+  const handleDelete = (id) => {
+    const confirm = window.confirm("Are you sure you want to delete this question?");
+    if (confirm) {
+      deleteMutation.mutate(id);
+    }
+  };
 
   if (isLoading) {
     return (
@@ -35,9 +54,9 @@ function AllQuestions() {
       <h2 className="text-3xl font-bold text-center mb-8">All Questions</h2>
       <div className="max-w-5xl mx-auto space-y-4">
         {questions.length > 0 ? (
-          questions.map((item, index) => (
-            <div key={index} className="flex justify-between bg-white">
-              <div  className="w-9/12 p-4 rounded-lg shadow-md">
+          questions.map((item) => (
+            <div key={item.questionId} className="flex justify-between bg-white rounded shadow">
+              <div className="w-9/12 p-4">
                 <p className="text-lg font-semibold">{item.questionTitle}</p>
                 <p className="text-lg font-semibold">
                   Question Id: {item.questionId}
@@ -46,31 +65,31 @@ function AllQuestions() {
                   Asked by {item.user || "Anonymous"}
                 </p>
               </div>
-              <div className="w-3/12 text-center flex justify-center items-center gap-2">
+              <div className="w-3/12 text-center flex flex-col justify-center items-center gap-2 p-2">
                 <Link to={`/solution/${item.questionId}`}>
-                  <button className="bg-blue-600 cursor-pointer text-white p-3 rounded-lg">
+                  <button className="bg-blue-600 text-white px-3 py-1 rounded">
                     View Answer
                   </button>
                 </Link>
-                <Link 
-                to="/dashboard/add-note"
-                state={
-                  {
-                    question: item
-                  }
-                }
+                <Link
+                  to="/dashboard/add-note"
+                  state={{ question: item }}
                 >
-                  <button className="bg-blue-600 cursor-pointer text-white p-3 rounded-lg">
+                  <button className="bg-green-600 text-white px-3 py-1 rounded">
                     Give Answer
                   </button>
                 </Link>
+                <button
+                  onClick={() => handleDelete(item.questionId)}
+                  className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+                >
+                  Delete
+                </button>
               </div>
             </div>
           ))
         ) : (
-          <p className="text-center text-gray-600">
-            No recent questions found.
-          </p>
+          <p className="text-center text-gray-600">No recent questions found.</p>
         )}
       </div>
     </section>

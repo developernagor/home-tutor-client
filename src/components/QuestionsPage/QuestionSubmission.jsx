@@ -89,14 +89,14 @@ function QuestionSubmission() {
   <div className="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-lg">
     <h2 className="text-4xl font-bold mb-4">Write Your Question</h2>
     <form onSubmit={handleQuestionSubmission}>
-      <lebel>
+      <label>
         <h1 className='text-2xl font-semibold mb-2'>Question</h1>
-      </lebel>
+      </label>
       <input type="text" name="question" placeholder="Enter your question..." className="w-full p-3 border rounded-lg mb-4"/>
       
-      <lebel>
+      <label>
         <h1 className='text-2xl font-semibold mb-2'>Class</h1>
-      </lebel>
+      </label>
       <select name='class' className="w-full p-3 border rounded-lg mb-4">
         <option>Select Class</option>
         <option value="One">One</option>
@@ -113,9 +113,9 @@ function QuestionSubmission() {
         <option value="Other">Other</option>
       </select>
 
-      <lebel>
+      <label>
         <h1 className='text-2xl font-semibold mb-2'>Subject</h1>
-      </lebel>
+      </label>
       <select name='category' className="w-full p-3 border rounded-lg mb-4">
   <option>Select Subject</option>
   {subjectList.map((subject, index) => (
@@ -142,14 +142,14 @@ function QuestionSubmission() {
         </div>
 
 
-        <lebel>
+        <label>
         <h1 className='text-2xl font-semibold mb-2'>Chapter / Topic</h1>
-      </lebel>
+      </label>
       <input type="number,text" name="chapter" placeholder="Enter chapter or topic" className="w-full p-3 border rounded-lg mb-4"/>
       
-      <lebel>
+      <label>
         <h1 className='text-2xl font-semibold mb-2'>Brief description</h1>
-      </lebel>
+      </label>
       <textarea name='questionDetails' placeholder="Provide more details (optional)" className="w-full p-3 border rounded-lg mb-4"></textarea>
       <button className="w-full bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700">
         Submit Question
