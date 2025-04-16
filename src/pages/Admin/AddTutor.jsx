@@ -1,13 +1,26 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
+import { AuthContext } from "../../providers/AuthProvider";
 
 function AddTutor() {
+
+  const [imageFile, setImageFile] = useState(null);
+
+  const {handleUploadImage} = useContext(AuthContext)
+
   const [tutorData, setTutorData] = useState({
     tutorName: "",
     tutorSubject: "",
-    tutorDescription: {},
+    tutorGender: "",
+    tutorEmail: "",
+    tutorTeachingMethod: "",
+    tutorTeachingDays: "",
+    tutorTeachingTime: "",
+    tutorQualification: "",
+    tutorLanguages: "",
+    tutorDescription: "",
     tutorExperience: "",
     tutorRating: "",
     tutorContact: "",
@@ -51,12 +64,24 @@ function AddTutor() {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+
     if (validateForm()) {
       // Process the tutor data
       try {
+        let imageURL = "";
+      if (imageFile) {
+        imageURL = await handleUploadImage(imageFile);
+      }
+
+      const newTutor = {
+        ...tutorData,
+        tutorImage: imageURL, // optional: rename as per your backend
+      };
+
         const response = await axios.post(
           `${import.meta.env.VITE_API_URL}/tutor`,
-          tutorData
+          newTutor
         );
         console.log(response.data);
         Swal.fire({
@@ -71,6 +96,13 @@ function AddTutor() {
         setTutorData({
           tutorName: "",
           tutorSubject: "",
+          tutorGender: "",
+          tutorEmail: "",
+          tutorTeachingMethod: "",
+          tutorTeachingDays: "",
+          tutorTeachingTime: "",
+          tutorQualification: "",
+          tutorLanguages: "",
           tutorDescription: "",
           tutorExperience: "",
           tutorRating: "",
@@ -78,6 +110,7 @@ function AddTutor() {
           tutorLocation: "",
           tutorAvailability: "",
         });
+        setImageFile(null);
 
         navigate("/dashboard/all-tutors");
         return response.data;
@@ -88,19 +121,11 @@ function AddTutor() {
     }
   };
 
-  // Gender: Male
-  //Email: mehedi.tutor@example.com
-  //Preferred Teaching Method: Online & In-person
-  //Teaching Days: Sunday to Thursday
-  //Teaching Hours: 4:00 PM – 8:00 PM
-  //Qualification: B.Sc in Physics, National University
-  //Languages Spoken: Bangla, English
-  //About: Passionate physics tutor with over a decade of experience in simplifying complex concepts for high school and college students. Focused on building strong fundamentals and boosting student confidence.
-
   return (
     <div className="p-6 bg-white shadow-md rounded">
       <h1 className="text-2xl font-bold mb-4">Add New Tutor</h1>
       <form onSubmit={handleSubmit}>
+        {/* Tutor Name */}
         <div className="mb-4">
           <label htmlFor="tutorName" className="block text-gray-700">
             Tutor Name
@@ -117,7 +142,19 @@ function AddTutor() {
             <p className="text-red-500 text-sm">{errors.tutorName}</p>
           )}
         </div>
+{/* Tutor Image */}
+        <div className="mb-4">
+            <label className="label-text">Photo</label>
+            <input
+              type="file"
+              accept="image/*"
+              name="image"
+              onChange={(e) => setImageFile(e.target.files[0])}
+              className="file-input file-input-bordered w-full mt-1"
+            />
+          </div>
 
+        {/* Tutor Subject */}
         <div className="mb-4">
           <label htmlFor="tutorSubject" className="block text-gray-700">
             Tutor Subject
@@ -135,6 +172,133 @@ function AddTutor() {
           )}
         </div>
 
+        {/* Tutor Gender */}
+        <div className="mb-4">
+          <label htmlFor="tutorGender" className="block text-gray-700">
+            Gender
+          </label>
+          <input
+            type="text"
+            id="tutorGender"
+            name="tutorGender"
+            value={tutorData.tutorGender}
+            onChange={handleInputChange}
+            className="w-full p-2 border border-gray-300 rounded"
+          />
+          {errors.tutorGender && (
+            <p className="text-red-500 text-sm">{errors.tutorGender}</p>
+          )}
+        </div>
+
+        {/* Email */}
+        <div className="mb-4">
+          <label htmlFor="tutorEmail" className="block text-gray-700">
+            Tutor Email
+          </label>
+          <input
+            type="text"
+            id="tutorEmail"
+            name="tutorEmail"
+            value={tutorData.tutorEmail}
+            onChange={handleInputChange}
+            className="w-full p-2 border border-gray-300 rounded"
+          />
+          {errors.tutorEmail && (
+            <p className="text-red-500 text-sm">{errors.tutorEmail}</p>
+          )}
+        </div>
+
+        {/* Teaching Method */}
+        <div className="mb-4">
+          <label htmlFor="tutorTeachingMethod" className="block text-gray-700">
+            Teaching Method
+          </label>
+          <input
+            type="text"
+            id="tutorTeachingMethod"
+            name="tutorTeachingMethod"
+            value={tutorData.tutorTeachingMethod}
+            onChange={handleInputChange}
+            className="w-full p-2 border border-gray-300 rounded"
+          />
+          {errors.tutorTeachingMethod && (
+            <p className="text-red-500 text-sm">{errors.tutorTeachingMethod}</p>
+          )}
+        </div>
+
+        {/* Teaching Days */}
+        <div className="mb-4">
+          <label htmlFor="tutorTeachingDays" className="block text-gray-700">
+            Teaching Days
+          </label>
+          <input
+            type="text"
+            id="tutorTeachingDays"
+            name="tutorTeachingDays"
+            value={tutorData.tutorTeachingDays}
+            onChange={handleInputChange}
+            className="w-full p-2 border border-gray-300 rounded"
+          />
+          {errors.tutorTeachingDays && (
+            <p className="text-red-500 text-sm">{errors.tutorTeachingDays}</p>
+          )}
+        </div>
+
+        {/* Teaching Time */}
+        <div className="mb-4">
+          <label htmlFor="tutorTeachingTime" className="block text-gray-700">
+            Teaching Time
+          </label>
+          <input
+            type="text"
+            id="tutorTeachingTime"
+            name="tutorTeachingTime"
+            value={tutorData.tutorTeachingTime}
+            onChange={handleInputChange}
+            className="w-full p-2 border border-gray-300 rounded"
+          />
+          {errors.tutorTeachingTime && (
+            <p className="text-red-500 text-sm">{errors.tutorTeachingTime}</p>
+          )}
+        </div>
+
+        {/* Qualification */}
+        <div className="mb-4">
+          <label htmlFor="tutorQualification" className="block text-gray-700">
+            Qualification
+          </label>
+          <input
+            type="text"
+            id="tutorQualification"
+            name="tutorQualification"
+            value={tutorData.tutorQualification}
+            onChange={handleInputChange}
+            className="w-full p-2 border border-gray-300 rounded"
+          />
+          {errors.tutorQualification && (
+            <p className="text-red-500 text-sm">{errors.tutorQualification}</p>
+          )}
+        </div>
+
+        {/* Languages */}
+        <div className="mb-4">
+          <label htmlFor="tutorLanguages" className="block text-gray-700">
+            Languages
+          </label>
+          <input
+            type="text"
+            id="tutorLanguages"
+            name="tutorLanguages"
+            value={tutorData.tutorLanguages}
+            onChange={handleInputChange}
+            className="w-full p-2 border border-gray-300 rounded"
+          />
+          {errors.tutorLanguages && (
+            <p className="text-red-500 text-sm">{errors.tutorLanguages}</p>
+          )}
+        </div>
+
+        {/* Tutor Description */}
         <div className="mb-4">
           <label htmlFor="tutorDescription" className="block text-gray-700">
             Tutor Description

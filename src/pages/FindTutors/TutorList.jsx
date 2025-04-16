@@ -38,7 +38,6 @@ function TutorList() {
         <h3 className="text-xl font-semibold mt-4">{tutor.tutorName}</h3>
         <p className="text-gray-600">{tutor.tutorSubject} expert</p>
         <p className="text-yellow-500 text-lg mt-2">⭐{tutor.tutorRating}</p>
-        <p className="mt-2 font-semibold">$40/hr</p>
         <Link to={`/tutor/${tutor._id}`}>
         <button className="mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
           View Profile
