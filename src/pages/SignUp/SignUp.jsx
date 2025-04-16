@@ -62,9 +62,6 @@ function SignUp() {
         const userCredential = await createUser(email, password);
         const user = userCredential.user;
 
-        // Update profile
-        await updateProfile(user, { displayName: name, photoURL });
-
         setSuccess("User registered successfully!");
         form.reset();
         navigate("/login");

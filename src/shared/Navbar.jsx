@@ -1,16 +1,20 @@
 import { useContext } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { AuthContext } from "../providers/AuthProvider";
 
 function Navbar() {
   const { user, signOutUser } = useContext(AuthContext);
-  // console.log(user);
+  const navigate = useNavigate();
 
 
   const ifLogin = (
     <>
       <Link
-        onClick={signOutUser}
+        onClick={() => {
+          if (confirm("Are you sure you want to logout?")) {
+            signOutUser().then(() => navigate("/login"));
+          }
+        }}
         className="bg-white text-blue-600 px-4 py-2 rounded-lg hover:bg-gray-200"
       >
         Logout

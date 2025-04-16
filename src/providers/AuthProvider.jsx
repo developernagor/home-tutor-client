@@ -11,9 +11,10 @@ function AuthProvider({ children }) {
     const [error,setError] = useState("")
 
 
-    const createUser = (email,password) => {
+    const createUser = async(email,password) => {
         setLoading(true);
-        return createUserWithEmailAndPassword(auth, email, password);
+        setError("");
+        await createUserWithEmailAndPassword(auth, email, password);
     }
 
     const signInUser = (email, password) => {
@@ -30,20 +31,23 @@ function AuthProvider({ children }) {
         const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
             setUser(currentUser);
             console.log("current user", currentUser)
-            setLoading(false);
+            
             // save current user in db
             if(currentUser) {
+                console.log(currentUser)
+                const updateUser = {
+                    name: currentUser.displayName,
+                    image: currentUser.photoURL
+                }
+                console.log(updateUser)
                 try {
-                   await axios.post(`${import.meta.env.VITE_API_URL}/users/${currentUser?.email}`,{
-                        name: currentUser?.displayName || "Anonymous User",
-              email: currentUser?.email,
-              image: currentUser?.photoURL || "",
-                    })
-                    console.log("User saved to database successfully.");
+                   await axios.post(`${import.meta.env.VITE_API_URL}/user/${currentUser?.email}`,updateUser)
+                        
                 } catch (error) {
                     console.error("Error saving user to database:", error.message);
                 }
             }
+            setLoading(false);
         });
 
         return () => unsubscribe(); // Cleanup subscription on unmount
