@@ -53,8 +53,8 @@ function Navbar() {
       <Link to="/blog" className="hover:text-gray-300">
         Blog
       </Link>
-      <Link to="/contact" className="hover:text-gray-300">
-        Contact
+      <Link to="/results" className="hover:text-gray-300">
+        Results
       </Link>
       {user?.email && (
         <Link to="/dashboard" className="hover:text-gray-300">Dashboard</Link>
@@ -82,8 +82,8 @@ function Navbar() {
       <Link to="/blog" className="hover:text-gray-300">
         Blog
       </Link>
-      <Link to="/contact" className="mb-2 hover:text-white">
-        Contact
+      <Link to="/results" className="mb-2 hover:text-white">
+        Results
       </Link>
       {user?.email && (
         <Link to="/dashboard" className="hover:text-gray-300 mb-2">Dashboard</Link>

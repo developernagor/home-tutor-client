@@ -3,9 +3,8 @@ import { Link } from "react-router";
 
 const Notice = () => {
   const notices = [
-    { id: 1, title: "🎉 School Reopening on April 15!", link: "" },
-    { id: 2, title: "📝 Exam Schedule Released!", link: "" },
-    { id: 3, title: "🏖️ Holiday on May 1st!", link: "" },
+    { id: 1, title: "🎉 SSC Exam Routine 2025 (সংশোধিত সময়সূচি)", link: "https://drive.google.com/file/d/14lj6ECiR84DXx41PRzNBOHJRIlWNR0iU/view?usp=sharing" },
+    
   ];
 
   return (
@@ -18,6 +17,7 @@ const Notice = () => {
             <Link
               key={notice.id}
               to={notice.link}
+              target="_blank"
               className="text-black font-semibold mb-2 hover:text-purple-600"
             >
               {notice.title}

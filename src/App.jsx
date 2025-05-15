@@ -28,6 +28,8 @@ import { AuthContext } from './providers/AuthProvider';
 import PrivateRoute from './components/PrivateRoute';
 import Blog from './pages/Blog/Blog';
 import AddBlog from './pages/Blog/AddBlog';
+import AddResultForm from './pages/Admin/AddResultForm';
+import SearchResult from './pages/Student/SearchResult';
 
 function App() {
 
@@ -43,6 +45,7 @@ function App() {
         <Route path="/courses/:courseId" element={<CourseDetails />} /> {/* Simplified CourseDetails route */}
         <Route path="/ask-question" element={<AskQuestions />} />
         <Route path="/blog" element={<Blog />} />
+        <Route path="/results" element={<SearchResult />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
@@ -66,6 +69,7 @@ function App() {
             <Route path='add-solution' element={<AddSolution />} />
             <Route path='add-blog' element={<AddBlog />} />
             <Route path='all-questions' element={<AllQuestions />} />
+            <Route path='add-result' element={<AddResultForm />} />
 
   
       </Route>

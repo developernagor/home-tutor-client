@@ -1,7 +1,9 @@
 // src/pages/Blog.jsx
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+
 import React from "react";
+import { Link } from "react-router";
 
 const blogPosts = [
   {
@@ -35,6 +37,7 @@ const Blog = () => {
     queryKey: ["blogData"],
     queryFn: async() => {
       const res = await axios.get(`${import.meta.env.VITE_API_URL}/blog`);
+      console.log(res.data)
       return res.data;
     }
   })
@@ -58,8 +61,11 @@ const Blog = () => {
             key={index}
             className="bg-white border mb-4 shadow-md rounded-2xl p-6 hover:shadow-xl transition"
           >
-            <h2 className="text-2xl font-semibold mb-3">{blog.blogTitle}</h2>
-            <p className="text-gray-600 mb-4">{blog.blogDescription}</p>
+            <Link to={`/blog/${blog._id}`} className="text-black hover:underline">
+  {blog.title}
+</Link>
+
+            {/* <p className="text-gray-600 mb-4">{blog.blogDescription}</p> */}
             <div className="flex items-center justify-between text-sm text-gray-500">
               <span>{blog.author}</span>
               <span>{blog.blogUploadTime}</span>
