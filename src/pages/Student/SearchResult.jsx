@@ -11,7 +11,7 @@ function SearchResult() {
   const [merit, setMerit] = useState(null);
   const resultRef = useRef();
 
-  const examOptions = ["May 2025", "June 2025"];
+
 
   // Fetch all results once
   const {
@@ -27,7 +27,9 @@ function SearchResult() {
       return response.data;
     },
   });
+  console.log(allResults)
 
+  const examOptions = [...new Set(allResults.map((r) => r.examName))];
   // Calculate merit position based on obtainedMarks
   const calculateMeritPosition = (studentResult, exam) => {
     if (!allResults.length) {
@@ -177,10 +179,26 @@ function SearchResult() {
                   <th className="py-3 px-4 bg-blue-100 w-1/3">👤 Name</th>
                   <td className="py-3 px-4">{result.studentName}</td>
                 </tr>
+
+              {/* Student Id */}
+                <tr className="border-b border-gray-300">
+                  <th className="py-3 px-4 bg-blue-100 w-1/3">👤 Student Id</th>
+                  <td className="py-3 px-4">{result.studentId}</td>
+                </tr>
+
+              {/* Class */}
                 <tr className="border-b border-gray-300">
                   <th className="py-3 px-4 bg-blue-100">🏫 Class</th>
                   <td className="py-3 px-4">{result.studentClass}</td>
                 </tr>
+
+                {/* Exam Name */}
+                <tr className="border-b border-gray-300">
+                  <th className="py-3 px-4 bg-blue-100">🗓️ Exam Name</th>
+                  <td className="py-3 px-4">{result.examName}</td>
+                </tr>
+
+                {/* Exam subject name */}
                 <tr className="border-b border-gray-300">
                   <th className="py-3 px-4 bg-blue-100">📚 Subject</th>
                   <td className="py-3 px-4">{result.subject}</td>
@@ -201,10 +219,7 @@ function SearchResult() {
                   <th className="py-3 px-4 bg-blue-100">⭐ GPA</th>
                   <td className="py-3 px-4">{result.gpa}</td>
                 </tr>
-                <tr>
-                  <th className="py-3 px-4 bg-blue-100">🗓️ Exam</th>
-                  <td className="py-3 px-4">{result.examName}</td>
-                </tr>
+                
                 <tr>
                   <th className="py-3 px-4 bg-blue-100">🏆 Merit Position</th>
                   <td className="py-3 px-4">
