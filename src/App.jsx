@@ -31,6 +31,8 @@ import AddBlog from './pages/Blog/AddBlog';
 import AddResultForm from './pages/Admin/AddResultForm';
 import SearchResult from './pages/Student/SearchResult';
 
+import EditProfile from './pages/Student/EditProfile';
+
 function App() {
 
   const user = useContext(AuthContext)
@@ -53,6 +55,7 @@ function App() {
         <Route path="/solution/:id" element={<SingleQuestionSolution />} />
         <Route path="/tutor/:id" element={<TutorProfile />} />
         <Route path="/subject-wise-solution/:id" element={<SubjectWiseSolution />} />
+        <Route path="/edit-profile" element={<EditProfile />} />
       </Route>
 
       {/* Protected Dashboard Routes */}
