@@ -28,11 +28,11 @@ function DashboardLayout() {
      }
 
   return (
-    <div className="flex h-screen">
+    <div className="">
       {/* Sidebar */}
-      <aside className="bg-gray-900 text-white w-4/12 md:w-2/12 p-4">
-        <h2 className="text-sm md:text-3xl font-bold">Dashboard</h2>
-        <ul className="mt-2 md:mt-4 text-sm md:text-2xl space-y-1 md:space-y-2">
+      <div className="bg-gray-900 text-white w-full lg:p-4 md:p-2 p-1">
+        <h2 className="text-sm md:text-sm p-2 text-center font-bold">Welcome To Dashboard</h2>
+        <ul className="flex flex-wrap justify-center lg:gap-6 md:gap-2 gap-8 text-sm">
           
           {
             dbUser.role === "admin" 
@@ -53,20 +53,22 @@ function DashboardLayout() {
             <li className='border-b-1 pb-2 mb-2'><Link to="/" className="text-white">Home</Link></li>
             <li className='border-b-1 pb-2 mb-2'><Link
               to="/edit-profile"
-              className=" text-white rounded-xl hover:bg-blue-600"
+              className=" text-white rounded-xl  hover:bg-blue-600"
             >
               Edit Profile
             </Link></li>
+            <li className='border-b-1 pb-2 mb-2'>   <button onClick={signOutUser} className="text-white rounded-xl hover:bg-blue-600">Logout</button>
+</li>
             </>
 }
 
         </ul>
-        <button onClick={signOutUser} className="bg-white mt-6 text-blue-600 px-4 py-2 rounded-lg cursor-pointer hover:bg-gray-200">Logout</button>
+        
 
-      </aside>
+      </div>
 
       {/* Main Content */}
-      <div className="flex-1 p-2 md:p-4 lg:p-6 w-8/12 md:w-10/12">
+      <div className=" p-2 md:p-4 lg:p-6 w-full">
         <Outlet /> {/* This will render the dashboard pages */}
       </div>
     </div>

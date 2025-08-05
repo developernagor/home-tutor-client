@@ -89,7 +89,7 @@ const AddResultForm = () => {
     };
 
   return (
-    <div className="max-w-2xl mx-auto mt-10 bg-white shadow-lg p-8 rounded-2xl">
+    <div className="max-w-2xl mx-auto mt-10 bg-white shadow-lg lg:p-8 md:p-2 rounded-2xl">
       <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">
         Add Student Result
       </h2>

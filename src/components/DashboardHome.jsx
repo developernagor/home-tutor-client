@@ -50,7 +50,7 @@ function DashboardHome() {
         <main className="p-6">
           {dbUser?.role === "admin" ? (
             <>
-              <WelcomeDashboard></WelcomeDashboard>
+              {/* <WelcomeDashboard></WelcomeDashboard> */}
               <QuickStats></QuickStats>
               <UserList></UserList>
               <RecentActivities></RecentActivities>
@@ -60,7 +60,7 @@ function DashboardHome() {
             </>
           ) : (
             <>
-              <WelcomeDashboard></WelcomeDashboard>
+              {/* <WelcomeDashboard></WelcomeDashboard> */}
               <StudentProfile></StudentProfile>
             </>
           )}
