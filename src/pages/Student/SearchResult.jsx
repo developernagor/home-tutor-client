@@ -238,6 +238,33 @@ function SearchResult() {
                     )}
                   </td>
                 </tr>
+
+                {/* Teacher's Comment */}
+<tr className="border-b border-gray-300">
+  <th className="py-3 px-4 bg-blue-100">📝 Teacher's Comment</th>
+  <td className="py-3 px-4">{result.teacherComment || "N/A"}</td>
+</tr>
+
+{/* Answer Paper Link */}
+<tr className="border-b border-gray-300">
+  <th className="py-3 px-4 bg-blue-100">🔗 Answer Paper</th>
+  <td className="py-3 px-4">
+    {result.answerPaperLink ? (
+      <a
+        href={result.answerPaperLink}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-blue-600 underline hover:text-blue-800"
+      >
+        View Answer Sheet
+      </a>
+    ) : (
+      "N/A"
+    )}
+  </td>
+</tr>
+
+
               </tbody>
             </table>
           </div>

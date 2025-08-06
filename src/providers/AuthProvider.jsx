@@ -16,10 +16,13 @@ function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  // Upload image to imgbb
-  const handleUploadImage = async (image) => {
-    const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
-    const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
+
+  const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
+  const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
+
+    // Upload image to imgbb
+    const handleUploadImage = async (image) => {
+    
     // const photo = form.image.files[0];
 
     try {
@@ -51,17 +54,38 @@ function AuthProvider({ children }) {
   const createUser = async (email, password) => {
     setLoading(true);
     setError("");
-    await createUserWithEmailAndPassword(auth, email, password);
+    try {
+      return await createUserWithEmailAndPassword(auth, email, password);
+    } catch (err) {
+      setError(err.message);
+      throw err;
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const signInUser = (email, password) => {
+  const signInUser = async (email, password) => {
     setLoading(true);
-    return signInWithEmailAndPassword(auth, email, password);
+    try {
+      return await signInWithEmailAndPassword(auth, email, password);
+    } catch (err) {
+      setError(err.message);
+      throw err;
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const signOutUser = () => {
+  const signOutUser = async () => {
     setLoading(true);
-    return signOut(auth);
+    try {
+      return await signOut(auth);
+    } catch (err) {
+      setError(err.message);
+      throw err;
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {

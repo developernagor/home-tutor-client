@@ -6,6 +6,7 @@ import { Link } from 'react-router'; // ✅ Correct import
 
 function StudentProfile() {
   const { user } = useContext(AuthContext);
+  console.log(user)
 
   const { data: dbUser = {}, isLoading, isError, error } = useQuery({
     queryKey: ['user'],
@@ -14,6 +15,7 @@ function StudentProfile() {
       return res.data;
     },
   });
+  console.log(dbUser)
 
   const { data: studentResults = [] } = useQuery({
     queryKey: ['results', dbUser?.studentId],
@@ -35,12 +37,12 @@ function StudentProfile() {
       <div className="flex flex-col items-center space-y-3">
         <img
           className="w-28 h-28 rounded-full object-cover ring-4 ring-blue-400 shadow-md"
-          src={dbUser.photoURL || 'https://i.pravatar.cc/150?img=32'}
+          src={user.photoURL || 'https://i.pravatar.cc/150?img=32'}
           alt="User Avatar"
         />
         <div className="text-center">
-          <h2 className="text-3xl font-extrabold text-gray-800">{dbUser.displayName}</h2>
-          <p className="text-gray-500">{dbUser.email}</p>
+          <h2 className="text-3xl font-extrabold text-gray-800">{user.displayName}</h2>
+          <p className="text-gray-500">{user.email}</p>
           <span className="inline-block mt-2 px-3 py-1 text-sm bg-blue-100 text-blue-800 rounded-full">
             {dbUser.role || 'Student'}
           </span>

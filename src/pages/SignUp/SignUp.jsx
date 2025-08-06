@@ -1,21 +1,17 @@
 import React, { useContext, useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router"; // ✅ Corrected import
 import { AuthContext } from "../../providers/AuthProvider";
-import axios from "axios";
 import { updateProfile } from "firebase/auth";
-import { Link } from "react-router";
-import { motion } from "framer-motion"; // Added animation
-import { Loader2 } from "lucide-react"; // Spinner icon
-
-const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
-const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
+import { Link } from "react-router"; // ✅ Corrected import
+import { motion } from "framer-motion";
+import { Loader2 } from "lucide-react";
 
 function SignUp() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { createUser } = useContext(AuthContext);
+  const { createUser, handleUploadImage } = useContext(AuthContext);
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -49,28 +45,29 @@ function SignUp() {
     try {
       if (!image) throw new Error("No image file selected");
 
-      const imageFormData = new FormData();
-      imageFormData.append("image", image);
+      // ✅ Upload image using context method
+      const photoURL = await handleUploadImage(image);
+      if (!photoURL) throw new Error("Image upload failed");
 
-      // Upload image to ImgBB
-      const imgRes = await axios.post(image_hosting_api, imageFormData);
+      // ✅ Create user with Firebase
+      const userCredential = await createUser(email, password);
+      const user = userCredential.user;
 
-      if (imgRes.data.success) {
-        const photoURL = imgRes.data.data.url;
+      // ✅ Update Firebase Auth Profile
+      await updateProfile(user, {
+        displayName: name,
+        photoURL,
+      });
 
-        // Create user with Firebase
-        const userCredential = await createUser(email, password);
-        const user = userCredential.user;
+      setSuccess("User registered successfully! Redirecting to login...");
+      form.reset();
 
-        setSuccess("User registered successfully!");
-        form.reset();
+      setTimeout(() => {
         navigate("/login");
-      } else {
-        throw new Error("Failed to upload image");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      setError(error.message || "An unexpected error occurred.");
+      }, 1500);
+    } catch (err) {
+      console.error("Error:", err);
+      setError(err.message || "An unexpected error occurred.");
     } finally {
       setLoading(false);
     }
@@ -90,8 +87,11 @@ function SignUp() {
 
         <form onSubmit={handleRegister} className="space-y-4">
           <div>
-            <label className="label-text">Name</label>
+            <label htmlFor="name" className="label-text">
+              Name
+            </label>
             <input
+              id="name"
               type="text"
               name="name"
               placeholder="Your Name"
@@ -101,8 +101,11 @@ function SignUp() {
           </div>
 
           <div>
-            <label className="label-text">Email</label>
+            <label htmlFor="email" className="label-text">
+              Email
+            </label>
             <input
+              id="email"
               type="email"
               name="email"
               placeholder="Your Email"
@@ -112,8 +115,11 @@ function SignUp() {
           </div>
 
           <div>
-            <label className="label-text">Photo</label>
+            <label htmlFor="image" className="label-text">
+              Photo
+            </label>
             <input
+              id="image"
               type="file"
               accept="image/*"
               name="image"
@@ -123,8 +129,11 @@ function SignUp() {
           </div>
 
           <div>
-            <label className="label-text">Password</label>
+            <label htmlFor="password" className="label-text">
+              Password
+            </label>
             <input
+              id="password"
               type="password"
               name="password"
               placeholder="Password"
@@ -163,7 +172,10 @@ function SignUp() {
 
         <p className="mt-6 text-center text-sm">
           Already have an account?{" "}
-          <Link to="/login" className="text-indigo-600 font-semibold hover:underline">
+          <Link
+            to="/login"
+            className="text-indigo-600 font-semibold hover:underline"
+          >
             Login here
           </Link>
         </p>

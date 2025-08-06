@@ -82,6 +82,8 @@ const AddResultForm = () => {
           grade: "",
           gpa: "",
           examName: "",
+          teacherComment: "",
+          answerPaperLink: "",
         });
       } catch (error) {
         console.error("Error submitting result:", error);
@@ -222,6 +224,34 @@ const AddResultForm = () => {
               className="input input-bordered w-full"
             />
           </div>
+
+          {/* Teacher's Comment */}
+<div className="sm:col-span-2">
+  <label className="block text-sm font-medium mb-1">Teacher's Comment</label>
+  <textarea
+    name="teacherComment"
+    value={formData.teacherComment}
+    onChange={handleChange}
+    placeholder="Write feedback or remarks"
+    className="textarea textarea-bordered w-full"
+  />
+</div>
+
+{/* Answer Paper Link */}
+<div className="sm:col-span-2">
+  <label className="block text-sm font-medium mb-1">Answer Paper Link</label>
+  <input
+    type="url"
+    name="answerPaperLink"
+    value={formData.answerPaperLink}
+    onChange={handleChange}
+    placeholder="https://drive.google.com/..."
+    className="input input-bordered w-full"
+  />
+</div>
+
+
+
         </div>
 
         <button type="submit" className="btn btn-primary w-full mt-4">

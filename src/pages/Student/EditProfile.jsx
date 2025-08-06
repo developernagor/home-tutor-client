@@ -1,5 +1,5 @@
 // src/pages/EditProfile.jsx
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../providers/AuthProvider';
 import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
@@ -24,11 +24,22 @@ function EditProfile() {
     return <p className="text-center text-red-500">Error: {error.message}</p>;
   }
 
-  const [formData, setFormData] = useState({
-    displayName: dbUser.displayName || '',
-    studentId: dbUser.studentId || '',
-    photoURL: dbUser.photoURL || '',
-  });
+const [formData, setFormData] = useState({
+  displayName: '',
+  studentId: '',
+  photoURL: '',
+});
+
+useEffect(() => {
+  if (dbUser) {
+    setFormData({
+      displayName: dbUser.displayName || '',
+      studentId: dbUser.studentId || '',
+      photoURL: dbUser.photoURL || '',
+    });
+  }
+}, [dbUser]);
+
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -56,7 +67,7 @@ function EditProfile() {
         <input
           type="text"
           name="displayName"
-          value={formData.displayName}
+          value={user?.displayName}
           onChange={handleChange}
           className="w-full px-3 py-2 border rounded mt-1"
         />
@@ -75,7 +86,7 @@ function EditProfile() {
         <input
           type="text"
           name="photoURL"
-          value={formData.photoURL}
+          value={user?.photoURL}
           onChange={handleChange}
           className="w-full px-3 py-2 border rounded mt-1"
         />
