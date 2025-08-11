@@ -94,22 +94,22 @@ function AuthProvider({ children }) {
       console.log("current user", currentUser);
 
       // save current user in db
-      if (currentUser) {
-        console.log(currentUser);
-        const updateUser = {
-          name: currentUser.displayName,
-          image: currentUser.photoURL,
-        };
-        console.log(updateUser);
-        try {
-          await axios.post(
-            `${import.meta.env.VITE_API_URL}/user/${currentUser?.email}`,
-            updateUser
-          );
-        } catch (error) {
-          console.error("Error saving user to database:", error.message);
-        }
-      }
+      // if (currentUser) {
+      //   console.log(currentUser);
+      //   const updateUser = {
+      //     name: currentUser.displayName,
+      //     image: currentUser.photoURL,
+      //   };
+      //   console.log(updateUser);
+      //   try {
+      //     await axios.post(
+      //       `${import.meta.env.VITE_API_URL}/user/${currentUser?.email}`,
+      //       updateUser
+      //     );
+      //   } catch (error) {
+      //     console.error("Error saving user to database:", error.message);
+      //   }
+      // }
       setLoading(false);
     });
 

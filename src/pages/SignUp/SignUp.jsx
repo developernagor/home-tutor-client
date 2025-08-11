@@ -5,6 +5,7 @@ import { updateProfile } from "firebase/auth";
 import { Link } from "react-router"; // ✅ Corrected import
 import { motion } from "framer-motion";
 import { Loader2 } from "lucide-react";
+import axios from "axios";
 
 function SignUp() {
   const [error, setError] = useState("");
@@ -23,6 +24,7 @@ function SignUp() {
     const name = form.name.value;
     const email = form.email.value;
     const image = form.image.files[0];
+    const studentId = form.studentId.value;
     const password = form.password.value;
 
     // Password validation
@@ -53,9 +55,19 @@ function SignUp() {
       const userCredential = await createUser(email, password);
       const user = userCredential.user;
 
-      // ✅ Update Firebase Auth Profile
-      await updateProfile(user, {
-        displayName: name,
+      // // ✅ Update Firebase Auth Profile
+      // await updateProfile(user, {
+      //   displayName: name,
+      //   photoURL,
+        
+      // });
+
+      //  Save extra user info (studentId) to backend
+      await axios.post(`${import.meta.env.VITE_API_URL}/user/${email}`, {
+        uid: user.uid,
+        name,
+        email,
+        studentId,
         photoURL,
       });
 
@@ -67,7 +79,11 @@ function SignUp() {
       }, 1500);
     } catch (err) {
       console.error("Error:", err);
-      setError(err.message || "An unexpected error occurred.");
+      if (err.response?.status === 409) {
+    setError("User with this email already exists.");
+  } else {
+    setError(err.message || "An unexpected error occurred.");
+  }
     } finally {
       setLoading(false);
     }
@@ -125,6 +141,20 @@ function SignUp() {
               name="image"
               required
               className="file-input file-input-bordered w-full mt-1"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="studentId" className="label-text">
+              Student ID
+            </label>
+            <input
+              id="studentId"
+              type="text"
+              name="studentId"
+              placeholder="Your student id"
+              className="input input-bordered w-full mt-1"
+            
             />
           </div>
 

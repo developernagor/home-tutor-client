@@ -16,6 +16,7 @@ function StudentProfile() {
     },
   });
   console.log(dbUser)
+  const joined = dbUser.timestamp ? new Date(dbUser.timestamp).toLocaleString() : "N/A";
 
   const { data: studentResults = [] } = useQuery({
     queryKey: ['results', dbUser?.studentId],
@@ -47,13 +48,15 @@ function StudentProfile() {
             {dbUser.role || 'Student'}
           </span>
         </div>
-        <p className="text-sm text-gray-600">{dbUser.studentId ? `ID: ${dbUser.studentId}` : 'Student ID not available.'}</p>
-        <Link
+        <p className="text-sm text-gray-600">{dbUser.studentId ? `Student ID: ${dbUser.studentId}` : 'Student ID not available.'}</p>
+        <p className="text-sm text-gray-600">Joined: {joined}</p>
+        
+        {/* <Link
           to="/edit-profile"
           className="mt-2 inline-block px-5 py-2 bg-blue-500 text-white font-medium rounded-full hover:bg-blue-600 transition"
         >
           Edit Profile
-        </Link>
+        </Link> */}
       </div>
 
       {/* Result Section (No Scrollbar) */}
