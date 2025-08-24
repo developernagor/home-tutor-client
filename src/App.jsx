@@ -32,6 +32,7 @@ import AddResultForm from './pages/Admin/AddResultForm';
 import SearchResult from './pages/Student/SearchResult';
 
 import EditProfile from './pages/Student/EditProfile';
+import MyStudents from './pages/Admin/MyStudents';
 
 function App() {
 
@@ -73,6 +74,7 @@ function App() {
             <Route path='add-blog' element={<AddBlog />} />
             <Route path='all-questions' element={<AllQuestions />} />
             <Route path='add-result' element={<AddResultForm />} />
+            <Route path='my-students' element={<MyStudents />} />
 
   
       </Route>

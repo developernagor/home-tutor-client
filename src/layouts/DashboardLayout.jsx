@@ -47,6 +47,7 @@ function DashboardLayout() {
           <li><Link to="add-solution" className="text-white">Add Solution</Link></li>
           <li><Link to="add-blog" className="text-white">Add Blog</Link></li>
           <li><Link to="add-result" className="text-white">Add Result</Link></li>
+          <li><Link to="my-students" className="text-white">My Students</Link></li>
             </>
             : 
             <>

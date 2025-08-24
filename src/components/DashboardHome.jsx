@@ -10,6 +10,7 @@ import StudentProfile from "../pages/Student/StudentProfile";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import UserList from "../pages/Admin/UserList";
+import EmailSendToUser from "../pages/Admin/EmailSendToUser";
 
 function DashboardHome() {
   const { user } = useContext(AuthContext);
@@ -51,6 +52,7 @@ function DashboardHome() {
           {dbUser?.role === "admin" ? (
             <>
               {/* <WelcomeDashboard></WelcomeDashboard> */}
+              <EmailSendToUser></EmailSendToUser>
               <QuickStats></QuickStats>
               <UserList></UserList>
               <RecentActivities></RecentActivities>

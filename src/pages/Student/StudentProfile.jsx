@@ -38,11 +38,11 @@ function StudentProfile() {
       <div className="flex flex-col items-center space-y-3">
         <img
           className="w-28 h-28 rounded-full object-cover ring-4 ring-blue-400 shadow-md"
-          src={user.photoURL || 'https://i.pravatar.cc/150?img=32'}
+          src={dbUser.photoURL || 'https://i.pravatar.cc/150?img=32'}
           alt="User Avatar"
         />
         <div className="text-center">
-          <h2 className="text-3xl font-extrabold text-gray-800">{user.displayName}</h2>
+          <h2 className="text-3xl font-extrabold text-gray-800">{dbUser.name}</h2>
           <p className="text-gray-500">{user.email}</p>
           <span className="inline-block mt-2 px-3 py-1 text-sm bg-blue-100 text-blue-800 rounded-full">
             {dbUser.role || 'Student'}
