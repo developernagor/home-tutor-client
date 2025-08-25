@@ -29,6 +29,23 @@ function StudentProfile() {
     enabled: !!dbUser?.studentId,
   });
 
+    const { data: studentEmails = [] } = useQuery({
+  queryKey: ['emails', dbUser?.studentId],
+  queryFn: async () => {
+    const response = await axios.get(
+      `${import.meta.env.VITE_API_URL}/emails/${dbUser?.studentId}`
+    );
+    return response.data;
+  },
+  enabled: !!dbUser?.studentId,
+});
+
+React.useEffect(() => {
+  console.log("Fetched emails:", studentEmails);
+}, [studentEmails]);
+
+
+
   if (isLoading) return <p className="text-center text-blue-500">Loading profile...</p>;
   if (isError) return <p className="text-center text-red-500">Error: {error.message}</p>;
 
@@ -58,6 +75,60 @@ function StudentProfile() {
           Edit Profile
         </Link> */}
       </div>
+
+       {/* Emails Section in Table */}
+<div className="bg-white p-4 rounded-xl shadow-inner border border-green-100">
+  <h3 className="text-xl font-semibold text-center text-green-700 mb-4 border-b pb-2">
+    Your Latest Emails
+  </h3>
+
+  {studentEmails.length > 0 ? (
+    <div className="overflow-x-auto">
+      <table className="min-w-full border border-green-200 text-left">
+        <thead>
+          <tr className="bg-green-100">
+            <th className="px-4 py-2 border-b">#</th>
+            <th className="px-4 py-2 border-b">Subject</th>
+            <th className="px-4 py-2 border-b">Body</th>
+            <th className="px-4 py-2 border-b">Date</th>
+          </tr>
+        </thead>
+        <tbody>
+  {studentEmails
+    .slice(-4) // last 4 emails
+    .reverse() // newest first
+    .map((email, idx) => {
+      // Extract main content (remove greetings and signatures)
+      const lines = email.body.split('\n').map(line => line.trim());
+      const mainContent = lines.find(
+        line => line && !line.startsWith("Hi") && !line.includes("Best Regards")
+      );
+
+      return (
+        <tr key={idx} className="hover:bg-green-50 transition">
+          <td className="px-4 py-2 border-b">{idx + 1}</td>
+          <td className="px-4 py-2 border-b font-semibold">{email.subject}</td>
+          <td className="px-4 py-2 border-b text-gray-700">
+            <marquee behavior="scroll" direction="left" scrollamount="5">
+              {mainContent || "No content"}
+            </marquee>
+          </td>
+          <td className="px-4 py-2 border-b text-sm text-gray-500">
+            {new Date(email.date).toLocaleDateString()}
+          </td>
+        </tr>
+      );
+    })}
+</tbody>
+
+      </table>
+    </div>
+  ) : (
+    <p className="text-center text-gray-500">No emails found.</p>
+  )}
+</div>
+
+
 
       {/* Result Section (No Scrollbar) */}
       <div className="bg-white p-4 rounded-xl shadow-inner border border-blue-100">

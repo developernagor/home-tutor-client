@@ -52,13 +52,12 @@ function DashboardLayout() {
             : 
             <>
             <li className='border-b-1 pb-2 mb-2'><Link to="/" className="text-white">Home</Link></li>
-            <li className='border-b-1 pb-2 mb-2'><Link
+            {/* <li className='border-b-1 pb-2 mb-2'><Link
               to="/edit-profile"
               className=" text-white rounded-xl  hover:bg-blue-600"
             >
               Edit Profile
-            </Link></li>
-            <li className='border-b-1 pb-2 mb-2'>   <button onClick={signOutUser} className="text-white rounded-xl hover:bg-blue-600">Logout</button>
+            </Link></li> */}            <li className='border-b-1 pb-2 mb-2'>   <button onClick={signOutUser} className="text-white rounded-xl hover:bg-blue-600">Logout</button>
 </li>
             </>
 }
